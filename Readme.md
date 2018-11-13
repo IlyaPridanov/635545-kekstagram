@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Илья Приданов](https://up.htmlacademy.ru/javascript/16/user/635545).
-* Наставник: `Неизвестно`.
+* Наставник: [Анастасия Ничипорчук](https://up.htmlacademy.ru/javascript/16/user/612797).
 
 ---
 
