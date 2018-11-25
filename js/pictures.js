@@ -25,15 +25,25 @@ var getRandomInt = function (min, max) {
 };
 
 var getRandomComment = function () {
-  var commentQuantity = getRandomInt(1, 2);
-  return (commentQuantity === 1) ? COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length)] : (COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length)] + COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length)]);
+  var commentSpeachQuantity = getRandomInt(1, 2);
+  return (commentSpeachQuantity === 1) ? COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] : (COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] + COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)]);
+};
+
+var commentQuantity =getRandomInt(1, 10);
+
+var getCommentsArray = function () {
+  var ArrayComments = [];
+  for (var i = 0;i < commentQuantity;i++) {
+    ArrayComments[i] = getRandomComment();
+  };
+  return ArrayComments;
 };
 
 for (var i = 0;i < 25;i++) {
   var foto = {
     url: 'photos/' + (i + 1) + '.jpg',
     likes: getRandomInt(15, 20),
-    comments: [getRandomComment(), getRandomComment(), getRandomComment()],
+    comments: getCommentsArray(),
     description: DESCRIPTION_STRINGS[getRandomInt(0, 5)]
   };
   photoUsers[i] = foto;
@@ -52,7 +62,7 @@ for (var i = 0; i < 25; i++) {
 
   userPhoto.querySelector('.picture__likes').textContent = photoUsers[i].likes;
 
-  userPhoto.querySelector('.picture__comments').textContent = photoUsers[i].comments.length;
+  userPhoto.querySelector('.picture__comments').textContent = commentQuantity;
 
   var fragment = document.createDocumentFragment();
 
@@ -69,9 +79,9 @@ bigPicture.querySelector('.big-picture__img').setAttribute('src',photoUsers[0].u
 
 bigPicture.querySelector('.likes-count').textContent = photoUsers[0].likes;
 
-bigPicture.querySelector('.comments-count').textContent = photoUsers[0].comments.length;
+bigPicture.querySelector('.comments-count').textContent = commentQuantity;
 
-var socialComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-getRandomInt(1,6).svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[i].comments + '</p></li>';
+var socialComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li><li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li><li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li>';
 
 bigPicture.querySelector('.social__comments').innerHTML = socialComments;
 
@@ -79,7 +89,7 @@ bigPicture.querySelector('.social__caption').textContent = photoUsers[0].descrip
 
 
 
-document.querySelector('.ocial__comment-count').classList.add('visually-hidden');
+document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
 
 
