@@ -18,7 +18,7 @@ var DESCRIPTION_STRINGS = [
   'Вот это тачка!'
 ];
 
-var photoUsers = [];
+var SOCIAL_COMMENTS_VISUAL = 3;
 
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -29,7 +29,7 @@ var getRandomComment = function () {
   return (commentSpeachQuantity === 1) ? COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] : (COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] + COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)]);
 };
 
-var commentQuantity =getRandomInt(1, 10);
+var commentQuantity =getRandomInt(1, 40);
 
 var getCommentsArray = function () {
   var ArrayComments = [];
@@ -39,15 +39,25 @@ var getCommentsArray = function () {
   return ArrayComments;
 };
 
-for (var i = 0;i < 25;i++) {
-  var foto = {
+var getPhoto = function(i) {
+  var photo = {
     url: 'photos/' + (i + 1) + '.jpg',
     likes: getRandomInt(15, 20),
     comments: getCommentsArray(),
     description: DESCRIPTION_STRINGS[getRandomInt(0, 5)]
   };
-  photoUsers[i] = foto;
-}
+  return photo;
+};
+
+var generatePhotoUsers = function () {
+  var newPhotoUsers = [];
+  for (var i = 0;i < 25;i++) {
+  newPhotoUsers.push(getPhoto(i))
+  }
+  return newPhotoUsers;
+  }
+
+var photoUsers = generatePhotoUsers();
 
 var userPhotoTemplate = document.querySelector('#picture')
   .content
@@ -55,40 +65,65 @@ var userPhotoTemplate = document.querySelector('#picture')
 
 var userPhotoContainer= document.querySelector('.pictures');
 
-for (var i = 0; i < 25; i++) {
-  var userPhoto = userPhotoTemplate.cloneNode(true);
+var getAllPhoto = function() {
+  var AllPhotos = [];
+  for (var i = 0; i < 25; i++) {
+    var userPhoto = userPhotoTemplate.cloneNode(true);
 
-  userPhoto.querySelector('.picture__img').setAttribute('src',photoUsers[i].url);
+    userPhoto.querySelector('.picture__img').setAttribute('src',photoUsers[i].url);
 
-  userPhoto.querySelector('.picture__likes').textContent = photoUsers[i].likes;
+    userPhoto.querySelector('.picture__likes').textContent = photoUsers[i].likes;
 
-  userPhoto.querySelector('.picture__comments').textContent = commentQuantity;
+    userPhoto.querySelector('.picture__comments').textContent = commentQuantity;
 
-  var fragment = document.createDocumentFragment();
+    var fragment = document.createDocumentFragment();
 
-  fragment.appendChild(userPhoto);
+    fragment.appendChild(userPhoto);
 
-  userPhotoContainer.appendChild(fragment);
-}
+    AllPhotos[i] = fragment;
+  };
+
+  return AllPhotos;
+};
+
+var getAllPhotoBuild = function() {
+  for (var i = 0; i < 25; i++) {
+    userPhotoContainer.appendChild(getAllPhoto()[i]);
+  };
+};
 
 var bigPicture = document.querySelector('.big-picture');
+
+var getBigPicture = function () {
+
+  bigPicture.querySelector('.big-picture__img').setAttribute('src',photoUsers[0].url);
+
+  bigPicture.querySelector('.likes-count').textContent = photoUsers[0].likes;
+
+  bigPicture.querySelector('.comments-count').textContent = commentQuantity;
+
+  var oneSocialComments = function () {
+    var oneSocialCommentsString = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li>';
+    return oneSocialCommentsString;
+  };
+
+  var socialComments = function () {
+    var socialCommentsAll = 0;
+    for (var i = 0;i < SOCIAL_COMMENTS_VISUAL;i++) {
+      socialCommentsAll = socialCommentsAll + oneSocialComments();
+    };
+    return socialCommentsAll;
+  };
+
+  bigPicture.querySelector('.social__comments').innerHTML = socialComments();
+
+  bigPicture.querySelector('.social__caption').textContent = photoUsers[0].description;
+};
+
+getAllPhotoBuild();
+getBigPicture();
+
 bigPicture.classList.remove('hidden');
-
-
-bigPicture.querySelector('.big-picture__img').setAttribute('src',photoUsers[0].url);
-
-bigPicture.querySelector('.likes-count').textContent = photoUsers[0].likes;
-
-bigPicture.querySelector('.comments-count').textContent = commentQuantity;
-
-var socialComments = '<li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li><li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li><li class="social__comment"><img class="social__picture" src="img/avatar-' + getRandomInt(1,6) + '.svg" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + photoUsers[0].comments[getRandomInt(0,commentQuantity - 1)] + '</p></li>';
-
-bigPicture.querySelector('.social__comments').innerHTML = socialComments;
-
-bigPicture.querySelector('.social__caption').textContent = photoUsers[0].description;
-
-
-
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
 
