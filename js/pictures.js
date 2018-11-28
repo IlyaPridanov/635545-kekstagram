@@ -55,7 +55,7 @@ var getRandomArrIndex = function () {
     indexArrNumbers[i] = i;
   }
   var randomIndexNumbers = [];
-  for (var j = 0; i < SUMM_USER_PHOTO; i++) {
+  for (var j = 0; j < SUMM_USER_PHOTO; j++) {
     var randomIndex = getRandomInt(0, SUMM_USER_PHOTO - j - 1);
     randomIndexNumbers[j] = indexArrNumbers[randomIndex];
     indexArrNumbers.splice(randomIndex, 1);
@@ -108,8 +108,9 @@ var getAllPhoto = function () {
 };
 
 var getAllPhotoBuild = function () {
+  var arrAllBuildPhotos = getAllPhoto();
   for (var i = 0; i < SUMM_USER_PHOTO; i++) {
-    userPhotoContainer.appendChild(getAllPhoto()[i]);
+    userPhotoContainer.appendChild(arrAllBuildPhotos[i]);
   }
 };
 
