@@ -20,6 +20,16 @@ var DESCRIPTION_STRINGS = [
 
 var SOCIAL_COMMENTS_VISUAL = 3;
 
+var SUMM_USER_PHOTO = 25;
+
+var userPhotoTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
+
+var userPhotoContainer= document.querySelector('.pictures');
+
+var bigPicture = document.querySelector('.big-picture');
+
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -29,8 +39,6 @@ var getRandomComment = function () {
   return (commentSpeachQuantity === 1) ? COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] : (COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length -1)] + COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)]);
 };
 
-var commentQuantity =getRandomInt(1, 40);
-
 var getCommentsArray = function () {
   var ArrayComments = [];
   for (var i = 0;i < commentQuantity;i++) {
@@ -39,9 +47,28 @@ var getCommentsArray = function () {
   return ArrayComments;
 };
 
+var commentQuantity = getRandomInt(1, 40);
+
+var getRandomArrIndex = function () {
+  var indexArrNumbers =[];
+  for (var i = 0;i < SUMM_USER_PHOTO;i++) {
+    indexArrNumbers[i] = i
+  };
+  var randomIndexNumbers =[];
+  for (var i = 0;i < SUMM_USER_PHOTO;i++) {
+    var randomIndex = getRandomInt(0, SUMM_USER_PHOTO - i -1);
+    randomIndexNumbers[i] = indexArrNumbers[randomIndex];
+    indexArrNumbers.splice(randomIndex, 1);
+  };
+
+  return randomIndexNumbers;
+};
+
+var randomIndexArrNumbers = getRandomArrIndex();
+
 var getPhoto = function(i) {
   var photo = {
-    url: 'photos/' + (i + 1) + '.jpg',
+    url: 'photos/' + (randomIndexArrNumbers[i] + 1) + '.jpg',
     likes: getRandomInt(15, 20),
     comments: getCommentsArray(),
     description: DESCRIPTION_STRINGS[getRandomInt(0, 5)]
@@ -51,7 +78,7 @@ var getPhoto = function(i) {
 
 var generatePhotoUsers = function () {
   var newPhotoUsers = [];
-  for (var i = 0;i < 25;i++) {
+  for (var i = 0;i < SUMM_USER_PHOTO;i++) {
   newPhotoUsers.push(getPhoto(i))
   }
   return newPhotoUsers;
@@ -59,15 +86,9 @@ var generatePhotoUsers = function () {
 
 var photoUsers = generatePhotoUsers();
 
-var userPhotoTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
-
-var userPhotoContainer= document.querySelector('.pictures');
-
 var getAllPhoto = function() {
-  var AllPhotos = [];
-  for (var i = 0; i < 25; i++) {
+  var allPhotos= [];
+  for (var i = 0; i < SUMM_USER_PHOTO; i++) {
     var userPhoto = userPhotoTemplate.cloneNode(true);
 
     userPhoto.querySelector('.picture__img').setAttribute('src',photoUsers[i].url);
@@ -80,19 +101,17 @@ var getAllPhoto = function() {
 
     fragment.appendChild(userPhoto);
 
-    AllPhotos[i] = fragment;
+    allPhotos[i] = fragment;
   };
 
-  return AllPhotos;
+  return allPhotos;
 };
 
 var getAllPhotoBuild = function() {
-  for (var i = 0; i < 25; i++) {
+  for (var i = 0; i < SUMM_USER_PHOTO; i++) {
     userPhotoContainer.appendChild(getAllPhoto()[i]);
   };
 };
-
-var bigPicture = document.querySelector('.big-picture');
 
 var getBigPicture = function () {
 
@@ -108,7 +127,7 @@ var getBigPicture = function () {
   };
 
   var socialComments = function () {
-    var socialCommentsAll = 0;
+    var socialCommentsAll = '';
     for (var i = 0;i < SOCIAL_COMMENTS_VISUAL;i++) {
       socialCommentsAll = socialCommentsAll + oneSocialComments();
     };
