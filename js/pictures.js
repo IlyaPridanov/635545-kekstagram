@@ -143,6 +143,52 @@ var getBigPicture = function () {
 getAllPhotoBuild();
 getBigPicture();
 
-bigPicture.classList.remove('hidden');
+/* bigPicture.classList.remove('hidden');*/
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
+
+/* module4-task1*/
+var ESC_KEYCODE = 27;
+var bigPictureCancel = document.querySelector('.big-picture__cancel');
+var userPhotoBuilding = document.querySelectorAll('.picture');
+var bigPictureDiv = document.querySelector('.big-picture__img');
+var bigPictureImg = bigPictureDiv.querySelector('img');
+var uploadFile = bigPictureDiv.querySelector('#upload-file');
+var imgUploadOverlay = bigPictureDiv.querySelector('.img-upload__overlay');
+
+var getCloseBigPictures = function () {
+  bigPictureCancel.addEventListener(
+      'click', function () {
+        bigPicture.classList.add('hidden');
+      }
+  );
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      bigPicture.classList.add('hidden');
+    }
+  });
+};
+
+var getClickMinPictures = function (photoOpen, o) {
+  photoOpen.addEventListener('click', function () {
+    bigPicture.classList.remove('hidden');
+    bigPictureImg.src = photoUsers[o].url;
+  });
+};
+
+var getOpenBigPictures = function () {
+  for (var k = 0; k < userPhotoBuilding.length; k++) {
+    getClickMinPictures(userPhotoBuilding[k], k);
+  }
+};
+
+var getImgUploadOverlay = function () {
+  uploadFile.addEventListener('change', function () {
+    imgUploadOverlay.classList.remove('hidden');
+  });
+};
+
+getCloseBigPictures();
+getOpenBigPictures();
+getImgUploadOverlay();
+
