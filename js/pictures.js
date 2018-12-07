@@ -192,6 +192,7 @@ var getCloseUploadPhoto = function () {
 
 var getClickMinPictures = function (photoOpen, o) {
   photoOpen.addEventListener('click', function () {
+    getBigPicture();
     bigPicture.classList.remove('hidden');
     bigPictureImg.src = photoUsers[o].url;
   });
