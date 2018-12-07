@@ -103,7 +103,6 @@ var getAllPhoto = function () {
 
     allPhotos[i] = fragment;
   }
-
   return allPhotos;
 };
 
@@ -137,7 +136,7 @@ var getBigPicture = function () {
 
   bigPicture.querySelector('.social__comments').innerHTML = socialComments();
 
-  bigPicture.querySelector('.social__caption').textContent = photoUsers[0].description;
+  bigPicture.querySelector('.social__caption').textContent = photoUsers[getRandomInt(0, photoUsers.length - 1)].description;
 };
 
 getAllPhotoBuild();
