@@ -162,7 +162,7 @@ var radioCheckedIndex;
 var imgUploadPreview = document.querySelector('.img-upload__preview');
 var imgUpload = imgUploadPreview.querySelector('img');
 
-var getCloseBigPictures = function () {
+var closeBigPictures = function () {
   bigPictureCancel.addEventListener(
       'click', function () {
         bigPicture.classList.add('hidden');
@@ -197,7 +197,7 @@ var getClickMinPictures = function (photoOpen, o) {
   });
 };
 
-var getOpenBigPictures = function () {
+var openBigPictures = function () {
   for (var k = 0; k < userPhotoBuilding.length; k++) {
     getClickMinPictures(userPhotoBuilding[k], k);
   }
@@ -230,9 +230,6 @@ var getPinSlayderResultIntro = function () {
 
 var getPhotoCssEffect = function (pinSlayderResult) {
   var WhoRadioChecked = getWhoRadioChecked();
-  if (WhoRadioChecked === 0) {
-    imgUploadOverlay.classList.add('hidden');
-  }
   if (WhoRadioChecked === 1) {
     imgUpload.style.filter = 'grayscale(' + pinSlayderResult + ')';
   }
@@ -250,19 +247,19 @@ var getPhotoCssEffect = function (pinSlayderResult) {
   }
 };
 
-var getAddEventListenerRadio = function (radioArr) {
+var addEventListenerRadio = function (radioArr) {
   radioArr.addEventListener('click', function () {
     getPhotoCssEffect(getPinSlayderResultIntro());
   });
 };
 
-var getAddEventListenerRadioResult = function () {
+var addEventListenerRadioResult = function () {
   for (var k = 0; k < effectsRadio.length; k++) {
-    getAddEventListenerRadio(effectsRadio[k]);
+    addEventListenerRadio(effectsRadio[k]);
   }
 };
 
-var getAddEventListenerPinSlayder = function () {
+var addEventListenerPinSlayder = function () {
   var UpDownPinSlayder = {
     down: 0,
     up: 0
@@ -276,16 +273,16 @@ var getAddEventListenerPinSlayder = function () {
   });
 };
 
-var getSlayderResult = function () {
+var slayderResult = function () {
   getPhotoCssEffect(getPinSlayderResultIntro());
-  getAddEventListenerRadioResult();
-  getAddEventListenerPinSlayder();
+  addEventListenerRadioResult();
+  addEventListenerPinSlayder();
 };
 
-getCloseBigPictures();
-getOpenBigPictures();
+closeBigPictures();
+openBigPictures();
 getImgUploadOverlay();
 getCloseUploadPhoto();
 getPinSlayderResultIntro();
 getPhotoCssEffect();
-getSlayderResult();
+slayderResult();
