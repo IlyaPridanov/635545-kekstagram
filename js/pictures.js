@@ -103,7 +103,6 @@ var getAllPhoto = function () {
 
     allPhotos[i] = fragment;
   }
-
   return allPhotos;
 };
 
@@ -137,12 +136,153 @@ var getBigPicture = function () {
 
   bigPicture.querySelector('.social__comments').innerHTML = socialComments();
 
-  bigPicture.querySelector('.social__caption').textContent = photoUsers[0].description;
+  bigPicture.querySelector('.social__caption').textContent = photoUsers[getRandomInt(0, photoUsers.length - 1)].description;
 };
 
 getAllPhotoBuild();
 getBigPicture();
 
-bigPicture.classList.remove('hidden');
+/* bigPicture.classList.remove('hidden');*/
 document.querySelector('.social__comment-count').classList.add('visually-hidden');
 document.querySelector('.comments-loader').classList.add('visually-hidden');
+
+/* module4-task1*/
+var ESC_KEYCODE = 27;
+var bigPictureCancel = document.querySelector('.big-picture__cancel');
+var uploadPhotoCancel = document.querySelector('.img-upload__cancel');
+var userPhotoBuilding = document.querySelectorAll('.picture');
+var bigPictureDiv = document.querySelector('.big-picture__img');
+var bigPictureImg = bigPictureDiv.querySelector('img');
+var uploadFile = document.querySelector('#upload-file');
+var imgUploadOverlay = document.querySelector('.img-upload__overlay');
+var pinSlayder = document.querySelector('.effect-level__pin');
+var effectsRadio = document.querySelectorAll('.effects__radio');
+var radioCheckedIndex;
+var imgUploadPreview = document.querySelector('.img-upload__preview');
+var imgUpload = imgUploadPreview.querySelector('img');
+
+var closeBigPictures = function () {
+  bigPictureCancel.addEventListener(
+      'click', function () {
+        bigPicture.classList.add('hidden');
+      }
+  );
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      bigPicture.classList.add('hidden');
+    }
+  });
+};
+
+var getCloseUploadPhoto = function () {
+  uploadPhotoCancel.addEventListener(
+      'click', function () {
+        imgUploadOverlay.classList.add('hidden');
+        imgUploadOverlay.value = '';
+      }
+  );
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      imgUploadOverlay.classList.add('hidden');
+      imgUploadOverlay.value = '';
+    }
+  });
+};
+
+var getClickMinPictures = function (photoOpen, o) {
+  photoOpen.addEventListener('click', function () {
+    getBigPicture();
+    bigPicture.classList.remove('hidden');
+    bigPictureImg.src = photoUsers[o].url;
+  });
+};
+
+var openBigPictures = function () {
+  for (var k = 0; k < userPhotoBuilding.length; k++) {
+    getClickMinPictures(userPhotoBuilding[k], k);
+  }
+};
+
+var getImgUploadOverlay = function () {
+  uploadFile.addEventListener('change', function () {
+    imgUploadOverlay.classList.remove('hidden');
+  });
+};
+
+var getWhoRadioChecked = function () {
+  for (var i = 0; i < effectsRadio.length; i++) {
+    if (effectsRadio[i].checked) {
+      radioCheckedIndex = i;
+    }
+  }
+  return radioCheckedIndex;
+};
+
+var getCssProperty = function (elem, property) {
+  var result = window.getComputedStyle(elem, null).getPropertyValue(property);
+  return (parseFloat(result) / 100);
+};
+
+var getPinSlayderResultIntro = function () {
+  var pinSlayderPageX = getCssProperty(pinSlayder, 'left');
+  return pinSlayderPageX;
+};
+
+var getPhotoCssEffect = function (pinSlayderResult) {
+  var WhoRadioChecked = getWhoRadioChecked();
+  if (WhoRadioChecked === 1) {
+    imgUpload.style.filter = 'grayscale(' + pinSlayderResult + ')';
+  }
+  if (WhoRadioChecked === 2) {
+    imgUpload.style.filter = 'sepia(' + pinSlayderResult + ')';
+  }
+  if (WhoRadioChecked === 3) {
+    imgUpload.style.filter = 'invert(' + pinSlayderResult * 100 + '%)';
+  }
+  if (WhoRadioChecked === 4) {
+    imgUpload.style.filter = 'blur(' + pinSlayderResult * 3 + 'px)';
+  }
+  if (WhoRadioChecked === 5) {
+    imgUpload.style.filter = 'brightness(' + ((pinSlayderResult * 2) + 1) + ')';
+  }
+};
+
+var addEventListenerRadio = function (radioArr) {
+  radioArr.addEventListener('click', function () {
+    getPhotoCssEffect(getPinSlayderResultIntro());
+  });
+};
+
+var addEventListenerRadioResult = function () {
+  for (var k = 0; k < effectsRadio.length; k++) {
+    addEventListenerRadio(effectsRadio[k]);
+  }
+};
+
+var addEventListenerPinSlayder = function () {
+  var UpDownPinSlayder = {
+    down: 0,
+    up: 0
+  };
+  pinSlayder.addEventListener('mousedown', function (evt) {
+    UpDownPinSlayder.down = evt.pageX;
+  });
+  pinSlayder.addEventListener('mouseup', function (evt) {
+    UpDownPinSlayder.up = evt.pageX;
+    getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
+  });
+};
+
+var slayderResult = function () {
+  getPhotoCssEffect(getPinSlayderResultIntro());
+  addEventListenerRadioResult();
+  addEventListenerPinSlayder();
+};
+
+closeBigPictures();
+openBigPictures();
+getImgUploadOverlay();
+getCloseUploadPhoto();
+getPinSlayderResultIntro();
+getPhotoCssEffect();
+slayderResult();
