@@ -286,3 +286,62 @@ getCloseUploadPhoto();
 getPinSlayderResultIntro();
 getPhotoCssEffect();
 slayderResult();
+
+/* module4-task2 */
+
+var scaleControlValue = document.querySelector('.scale__control--value');
+var scaleControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlBigger = document.querySelector('.scale__control--bigger');
+var inputTextHashtags = document.querySelector('.text__hashtags');
+
+/* Нажатие на кнопки масштаба */
+var addEventListenerScaleControl = function () {
+  scaleControlValue.value = '100%';
+  scaleControlSmaller.addEventListener('click', function () {
+    if (parseFloat(scaleControlValue.value) > 0) {
+      scaleControlValue.value = String(parseFloat(scaleControlValue.value) - 25) + '%';
+      imgUpload.style.transform = 'scale(' + (parseFloat(scaleControlValue.value) / 100) + ')';
+    }
+  });
+  scaleControlBigger.addEventListener('click', function () {
+    if (parseFloat(scaleControlValue.value) < 100) {
+      scaleControlValue.value = String(parseFloat(scaleControlValue.value) + 25) + '%';
+      imgUpload.style.transform = 'scale(' + (parseFloat(scaleControlValue.value) / 100) + ')';
+    }
+  });
+};
+
+/* Валидация форм */
+
+var inputValidation = function () {
+  inputTextHashtags.addEventListener('input', function () {
+    var arr = inputTextHashtags.value.split('#');
+    if (arr.length >= 5) {
+      inputTextHashtags.setCustomValidity('Не более пяти хештегов');
+    }
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === '#') {
+        inputTextHashtags.setCustomValidity('Хеш-тег не может состоять только из одной решётки');
+      }
+      if ((arr[i][arr.length - 1] !== ' ') && (i !== (arr.length - 1))) {
+        inputTextHashtags.setCustomValidity('Хэш-теги разделяются пробелами');
+      }
+      if (arr[i][0] !== '#') {
+        inputTextHashtags.setCustomValidity('Хэш-тег начинается с символа # (решётка)');
+      }
+      if (arr[i].length > 20) {
+        inputTextHashtags.setCustomValidity('Максимальная длина одного хэш-тега 20 символов');
+      } else {
+        inputTextHashtags.setCustomValidity('');
+      }
+      for (var j = 0; j < arr.length; j++) {
+        if (arr[i].toUpperCase() === arr[j].toUpperCase()) {
+          inputTextHashtags.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
+        }
+      }
+    }
+  });
+};
+
+inputValidation();
+addEventListenerScaleControl();
