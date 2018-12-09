@@ -161,6 +161,11 @@ var radioCheckedIndex;
 var imgUploadPreview = document.querySelector('.img-upload__preview');
 var imgUpload = imgUploadPreview.querySelector('img');
 
+var isInputNameInFocus = function () {
+  return userNameInput === document.activeElement;
+};
+  соответственно в обработчике ты проверяешь код клавиши == Esc и !isInputOnFocus()
+
 var closeBigPictures = function () {
   bigPictureCancel.addEventListener(
       'click', function () {
