@@ -161,10 +161,15 @@ var radioCheckedIndex;
 var imgUploadPreview = document.querySelector('.img-upload__preview');
 var imgUpload = imgUploadPreview.querySelector('img');
 
+var scaleControlValue = document.querySelector('.scale__control--value');
+var scaleControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlBigger = document.querySelector('.scale__control--bigger');
+var inputTextHashtags = document.querySelector('.text__hashtags');
+var inputTextDescription = document.querySelector('.text__description');
+
 var isInputNameInFocus = function () {
-  return userNameInput === document.activeElement;
+  return (inputTextHashtags === document.activeElement) || (inputTextDescription === document.activeElement);
 };
-  соответственно в обработчике ты проверяешь код клавиши == Esc и !isInputOnFocus()
 
 var closeBigPictures = function () {
   bigPictureCancel.addEventListener(
@@ -173,7 +178,7 @@ var closeBigPictures = function () {
       }
   );
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
+    if ((evt.keyCode === ESC_KEYCODE) && !isInputNameInFocus()) {
       bigPicture.classList.add('hidden');
     }
   });
@@ -294,11 +299,6 @@ slayderResult();
 
 /* module4-task2 */
 
-var scaleControlValue = document.querySelector('.scale__control--value');
-var scaleControlSmaller = document.querySelector('.scale__control--smaller');
-var scaleControlBigger = document.querySelector('.scale__control--bigger');
-var inputTextHashtags = document.querySelector('.text__hashtags');
-
 /* Нажатие на кнопки масштаба */
 var addEventListenerScaleControl = function () {
   scaleControlValue.value = '100%';
@@ -323,6 +323,9 @@ var inputValidation = function () {
     var arr = inputTextHashtags.value.split('#');
     if (arr.length >= 5) {
       inputTextHashtags.setCustomValidity('Не более пяти хештегов');
+    }
+    for (var w = 0; w < arr.length; w++) {
+      arr[w] = '#' + arr[w];
     }
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] === '#') {
