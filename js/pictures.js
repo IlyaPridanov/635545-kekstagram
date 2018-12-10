@@ -340,6 +340,7 @@ var checkAloneLattice = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     if (arr[i] === '#') {
       checkAloneLatticeResult = hashtagsErrorText.aloneLattice;
+      break;
     } else {
       checkAloneLatticeResult = '';
     }
@@ -347,23 +348,12 @@ var checkAloneLattice = function (arr) {
   return checkAloneLatticeResult;
 };
 
-var checkSpace = function (arr) {
-  var checkSpaceResult = '';
-  for (var i = 0; i < arr.length; i++) {
-    if ((arr[i][arr.length - 1] !== ' ') && (i !== (arr.length - 1))) {
-      checkSpaceResult = hashtagsErrorText.space;
-    } else {
-      checkSpaceResult = '';
-    }
-  }
-  return checkSpaceResult;
-};
-
 var checkNewHashtagsLattice = function (arr) {
   var checkNewHashtagsLatticeResult = '';
   for (var i = 0; i < arr.length; i++) {
     if (arr[i][0] !== '#') {
       checkNewHashtagsLatticeResult = hashtagsErrorText.newHashtagsLattice;
+      break;
     } else {
       checkNewHashtagsLatticeResult = '';
     }
@@ -376,6 +366,7 @@ var checkMaxLengthHashtags = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     if (arr[i].length > 20) {
       checkMaxLengthHashtagsResult = hashtagsErrorText.maxLengthHashtags;
+      break;
     } else {
       checkMaxLengthHashtagsResult = '';
     }
@@ -389,6 +380,7 @@ var checkSameHashtags = function (arr) {
     for (var j = 0; j < arr.length; j++) {
       if ((arr[i].toUpperCase() === arr[j].toUpperCase()) && (i !== j)) {
         checkSameHashtagsResult = hashtagsErrorText.sameHashtags;
+        break;
       } else {
         checkSameHashtagsResult = '';
       }
@@ -401,7 +393,6 @@ var gethashtagsArrMistakes = function (arrHashtags) {
   var hashtagsArrMistakes = [
     checkLengthFiveHashtags(arrHashtags),
     checkAloneLattice(arrHashtags),
-    checkSpace(arrHashtags),
     checkNewHashtagsLattice(arrHashtags),
     checkMaxLengthHashtags(arrHashtags),
     checkSameHashtags(arrHashtags)
