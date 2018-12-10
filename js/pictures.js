@@ -341,8 +341,6 @@ var checkAloneLattice = function (arr) {
     if (arr[i] === '#') {
       checkAloneLatticeResult = hashtagsErrorText.aloneLattice;
       break;
-    } else {
-      checkAloneLatticeResult = '';
     }
   }
   return checkAloneLatticeResult;
@@ -354,8 +352,6 @@ var checkNewHashtagsLattice = function (arr) {
     if (arr[i][0] !== '#') {
       checkNewHashtagsLatticeResult = hashtagsErrorText.newHashtagsLattice;
       break;
-    } else {
-      checkNewHashtagsLatticeResult = '';
     }
   }
   return checkNewHashtagsLatticeResult;
@@ -367,8 +363,6 @@ var checkMaxLengthHashtags = function (arr) {
     if (arr[i].length > 20) {
       checkMaxLengthHashtagsResult = hashtagsErrorText.maxLengthHashtags;
       break;
-    } else {
-      checkMaxLengthHashtagsResult = '';
     }
   }
   return checkMaxLengthHashtagsResult;
@@ -376,14 +370,18 @@ var checkMaxLengthHashtags = function (arr) {
 
 var checkSameHashtags = function (arr) {
   var checkSameHashtagsResult = '';
+  var flag = false;
   for (var i = 0; i < arr.length; i++) {
+    if (flag) {
+      break;
+    }
     for (var j = 0; j < arr.length; j++) {
       if ((arr[i].toUpperCase() === arr[j].toUpperCase()) && (i !== j)) {
         checkSameHashtagsResult = hashtagsErrorText.sameHashtags;
+        flag = true;
         break;
-      } else {
-        checkSameHashtagsResult = '';
       }
+      checkSameHashtagsResult = '';
     }
   }
   return checkSameHashtagsResult;
