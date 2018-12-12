@@ -269,19 +269,82 @@ var addEventListenerRadioResult = function () {
   }
 };
 
-var addEventListenerPinSlayder = function () {
+/* Кусок module5-task1 */
+
+var getPinDriver = function (xxx) {
+  pinSlayder.style.left = String(xxx * 100) + '%';
+};
+
+/* var addEventListenerPinSlayder = function () {
   var UpDownPinSlayder = {
     down: 0,
     up: 0
   };
   pinSlayder.addEventListener('mousedown', function (evt) {
-    UpDownPinSlayder.down = evt.pageX;
+    UpDownPinSlayder.down = evt.clientX;
   });
-  pinSlayder.addEventListener('mouseup', function (evt) {
-    UpDownPinSlayder.up = evt.pageX;
+  pinSlayder.addEventListener('mousemove', function (evt) {
+    UpDownPinSlayder.up = evt.clientX;
+    console.log(evt.clientX);
     getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
   });
+  pinSlayder.addEventListener('mouseup', function (evt) {
+    UpDownPinSlayder.up = evt.clientX;
+    getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
+  });
+}; */
+
+console.log(getPinSlayderResultIntro());
+
+var qqq = document.querySelector('.effect-level__depth');
+var www = document.querySelector('.effect-level__line');
+
+
+console.log(qqq.getBoundingClientRect());
+
+var addEventListenerPinSlayder = function () {
+
+pinSlayder.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    if ((pinSlayder.offsetLeft - shift.x) > 0) {
+      pinSlayder.style.left = (pinSlayder.offsetLeft - shift.x) + 'px';
+    /* getPhotoCssEffect(shift.x)*/;
+    }
+
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+
 };
+
 
 var slayderResult = function () {
   getPhotoCssEffect(getPinSlayderResultIntro());
