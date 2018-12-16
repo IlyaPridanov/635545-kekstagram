@@ -271,77 +271,51 @@ var addEventListenerRadioResult = function () {
 
 /* Кусок module5-task1 */
 
-var getPinDriver = function (xxx) {
-  pinSlayder.style.left = String(xxx * 100) + '%';
-};
-
-/* var addEventListenerPinSlayder = function () {
-  var UpDownPinSlayder = {
-    down: 0,
-    up: 0
-  };
-  pinSlayder.addEventListener('mousedown', function (evt) {
-    UpDownPinSlayder.down = evt.clientX;
-  });
-  pinSlayder.addEventListener('mousemove', function (evt) {
-    UpDownPinSlayder.up = evt.clientX;
-    console.log(evt.clientX);
-    getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
-  });
-  pinSlayder.addEventListener('mouseup', function (evt) {
-    UpDownPinSlayder.up = evt.clientX;
-    getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
-  });
-}; */
-
-console.log(getPinSlayderResultIntro());
-
-var qqq = document.querySelector('.effect-level__depth');
-var www = document.querySelector('.effect-level__line');
-
-
-console.log(qqq.getBoundingClientRect());
+var effectLevelLine = document.querySelector('.effect-level__line');
+var effectLevelDepth = document.querySelector('.effect-level__depth');
 
 var addEventListenerPinSlayder = function () {
+  pinSlayder.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
 
-pinSlayder.addEventListener('mousedown', function (evt) {
-  evt.preventDefault();
+    /* Запомним координаты точки, с которой мы начали перемещать диалог. */
 
-  var startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
-  };
-
-  var onMouseMove = function (moveEvt) {
-    moveEvt.preventDefault();
-
-    var shift = {
-      x: startCoords.x - moveEvt.clientX,
-      y: startCoords.y - moveEvt.clientY
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
     };
 
-    startCoords = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      if (((startCoords.x) > effectLevelLine.getBoundingClientRect().left) && ((startCoords.x) < effectLevelLine.getBoundingClientRect().right)) {
+        pinSlayder.style.left = (pinSlayder.offsetLeft - shift.x) + 'px';
+        effectLevelDepth.style.width = (pinSlayder.offsetLeft - shift.x) + 'px';
+        getPhotoCssEffect((startCoords.x - effectLevelLine.getBoundingClientRect().left) / (effectLevelLine.getBoundingClientRect().right - effectLevelLine.getBoundingClientRect().left));
+      }
+
     };
 
-    if ((pinSlayder.offsetLeft - shift.x) > 0) {
-      pinSlayder.style.left = (pinSlayder.offsetLeft - shift.x) + 'px';
-    /* getPhotoCssEffect(shift.x)*/;
-    }
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
 
-  };
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
 
-  var onMouseUp = function (upEvt) {
-    upEvt.preventDefault();
-
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  };
-
-  document.addEventListener('mousemove', onMouseMove);
-  document.addEventListener('mouseup', onMouseUp);
-});
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
 };
 
