@@ -169,6 +169,7 @@ var inputTextDescription = document.querySelector('.text__description');
 
 var effectLevelLine = document.querySelector('.effect-level__line');
 var effectLevelDepth = document.querySelector('.effect-level__depth');
+var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
 var isInputNameInFocus = function () {
   return (inputTextHashtags === document.activeElement) || (inputTextDescription === document.activeElement);
@@ -224,18 +225,23 @@ var getPhotoCssEffect = function (pinSlayderResult) {
   var WhoRadioChecked = getWhoRadioChecked();
   if (WhoRadioChecked === 1) {
     imgUpload.style.filter = 'grayscale(' + pinSlayderResult + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 2) {
     imgUpload.style.filter = 'sepia(' + pinSlayderResult + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 3) {
     imgUpload.style.filter = 'invert(' + pinSlayderResult * 100 + '%)';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 4) {
     imgUpload.style.filter = 'blur(' + pinSlayderResult * 3 + 'px)';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 5) {
     imgUpload.style.filter = 'brightness(' + ((pinSlayderResult * 2) + 1) + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 0) {
     imgUpload.style.filter = 'grayscale(' + 0 + ')';
@@ -243,8 +249,8 @@ var getPhotoCssEffect = function (pinSlayderResult) {
     imgUpload.style.filter = 'invert(' + 0 * 100 + '%)';
     imgUpload.style.filter = 'blur(' + 0 * 3 + 'px)';
     imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
-    imgUploadOverlay.classList.add('hidden');
-    imgUploadOverlay.value = '';
+    imgUploadEffectLevel.classList.add('hidden');
+    imgUploadEffectLevel.value = '';
   }
 };
 
