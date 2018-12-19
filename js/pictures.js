@@ -187,21 +187,6 @@ var closeBigPictures = function () {
   });
 };
 
-var getCloseUploadPhoto = function () {
-  uploadPhotoCancel.addEventListener(
-      'click', function () {
-        imgUploadOverlay.classList.add('hidden');
-        imgUploadOverlay.value = '';
-      }
-  );
-  document.addEventListener('keydown', function (evt) {
-    if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
-      imgUploadOverlay.classList.add('hidden');
-      imgUploadOverlay.value = '';
-    }
-  });
-};
-
 var getClickMinPictures = function (photoOpen, o) {
   photoOpen.addEventListener('click', function () {
     getBigPicture();
@@ -215,14 +200,6 @@ var openBigPictures = function () {
     getClickMinPictures(userPhotoBuilding[k], k);
   }
 };
-
-/* var getImgUploadOverlay = function () {
-  uploadFile.addEventListener('change', function () {
-    imgUploadOverlay.classList.remove('hidden');
-    pinSlayder.style.left = effectLevelLine.getBoundingClientRect().left + 'px';
-    effectLevelDepth.style.width = effectLevelLine.getBoundingClientRect().left + 'px';
-  });
-}; */
 
 var getWhoRadioChecked = function () {
   for (var i = 0; i < effectsRadio.length; i++) {
@@ -266,23 +243,45 @@ var getPhotoCssEffect = function (pinSlayderResult) {
     imgUpload.style.filter = 'invert(' + 0 * 100 + '%)';
     imgUpload.style.filter = 'blur(' + 0 * 3 + 'px)';
     imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
+    imgUploadOverlay.classList.add('hidden');
+    imgUploadOverlay.value = '';
   }
 };
 
 var getImgUploadOverlay = function () {
   uploadFile.addEventListener('change', function () {
     imgUploadOverlay.classList.remove('hidden');
-    pinSlayder.style.left = effectLevelLine.getBoundingClientRect().left + 'px';
-    effectLevelDepth.style.width = effectLevelLine.getBoundingClientRect().left + 'px';
+    var coordEnd = effectLevelLine.getBoundingClientRect().width;
+    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
+    pinSlayder.style.left = scaleCoord + '%';
+    effectLevelDepth.style.width = scaleCoord + '%';
     getPhotoCssEffect(1);
+  });
+};
+
+
+var getCloseUploadPhoto = function () {
+  uploadPhotoCancel.addEventListener(
+      'click', function () {
+        imgUploadOverlay.classList.add('hidden');
+        imgUploadOverlay.value = '';
+      }
+  );
+  document.addEventListener('keydown', function (evt) {
+    if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
+      imgUploadOverlay.classList.add('hidden');
+      imgUploadOverlay.value = '';
+    }
   });
 };
 
 var addEventListenerRadio = function (radioArr) {
   radioArr.addEventListener('click', function () {
     /* getPhotoCssEffect(getPinSlayderResultIntro()); */
-    pinSlayder.style.left = effectLevelLine.getBoundingClientRect().left + 'px';
-    effectLevelDepth.style.width = effectLevelLine.getBoundingClientRect().left + 'px';
+    var coordEnd = effectLevelLine.getBoundingClientRect().width;
+    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
+    pinSlayder.style.left = scaleCoord + '%';
+    effectLevelDepth.style.width = scaleCoord + '%';
     getPhotoCssEffect(1);
   });
 };
@@ -301,30 +300,24 @@ var addEventListenerPinSlayder = function () {
 
     /* Запомним координаты точки, с которой мы начали перемещать диалог. */
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        x: moveEvt.clientX
       };
 
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
+      var coord = shift.x - effectLevelLine.getBoundingClientRect().left;
+      var coordEnd = effectLevelLine.getBoundingClientRect().width;
+      var scaleCoord = Math.round((100 / coordEnd) * coord);
 
-      if (((startCoords.x) > effectLevelLine.getBoundingClientRect().left) && ((startCoords.x) < effectLevelLine.getBoundingClientRect().right)) {
-        pinSlayder.style.left = (pinSlayder.offsetLeft - shift.x) + 'px';
-        effectLevelDepth.style.width = (pinSlayder.offsetLeft - shift.x) + 'px';
-        getPhotoCssEffect((startCoords.x - effectLevelLine.getBoundingClientRect().left) / (effectLevelLine.getBoundingClientRect().right - effectLevelLine.getBoundingClientRect().left));
+      if ((shift.x > effectLevelLine.getBoundingClientRect().left) && (shift.x < effectLevelLine.getBoundingClientRect().right)) {
+        pinSlayder.style.left = scaleCoord + '%';
+
+        effectLevelDepth.style.width = scaleCoord + '%';
       }
 
+      getPhotoCssEffect(scaleCoord / 100);
     };
 
     var onMouseUp = function (upEvt) {
