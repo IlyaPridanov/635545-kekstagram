@@ -167,6 +167,10 @@ var scaleControlBigger = document.querySelector('.scale__control--bigger');
 var inputTextHashtags = document.querySelector('.text__hashtags');
 var inputTextDescription = document.querySelector('.text__description');
 
+var effectLevelLine = document.querySelector('.effect-level__line');
+var effectLevelDepth = document.querySelector('.effect-level__depth');
+var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+
 var isInputNameInFocus = function () {
   return (inputTextHashtags === document.activeElement) || (inputTextDescription === document.activeElement);
 };
@@ -184,21 +188,6 @@ var closeBigPictures = function () {
   });
 };
 
-var getCloseUploadPhoto = function () {
-  uploadPhotoCancel.addEventListener(
-      'click', function () {
-        imgUploadOverlay.classList.add('hidden');
-        imgUploadOverlay.value = '';
-      }
-  );
-  document.addEventListener('keydown', function (evt) {
-    if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
-      imgUploadOverlay.classList.add('hidden');
-      imgUploadOverlay.value = '';
-    }
-  });
-};
-
 var getClickMinPictures = function (photoOpen, o) {
   photoOpen.addEventListener('click', function () {
     getBigPicture();
@@ -211,12 +200,6 @@ var openBigPictures = function () {
   for (var k = 0; k < userPhotoBuilding.length; k++) {
     getClickMinPictures(userPhotoBuilding[k], k);
   }
-};
-
-var getImgUploadOverlay = function () {
-  uploadFile.addEventListener('change', function () {
-    imgUploadOverlay.classList.remove('hidden');
-  });
 };
 
 var getWhoRadioChecked = function () {
@@ -242,24 +225,70 @@ var getPhotoCssEffect = function (pinSlayderResult) {
   var WhoRadioChecked = getWhoRadioChecked();
   if (WhoRadioChecked === 1) {
     imgUpload.style.filter = 'grayscale(' + pinSlayderResult + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 2) {
     imgUpload.style.filter = 'sepia(' + pinSlayderResult + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 3) {
     imgUpload.style.filter = 'invert(' + pinSlayderResult * 100 + '%)';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 4) {
     imgUpload.style.filter = 'blur(' + pinSlayderResult * 3 + 'px)';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
   if (WhoRadioChecked === 5) {
     imgUpload.style.filter = 'brightness(' + ((pinSlayderResult * 2) + 1) + ')';
+    imgUploadEffectLevel.classList.remove('hidden');
   }
+  if (WhoRadioChecked === 0) {
+    imgUpload.style.filter = 'grayscale(' + 0 + ')';
+    imgUpload.style.filter = 'sepia(' + 0 + ')';
+    imgUpload.style.filter = 'invert(' + 0 * 100 + '%)';
+    imgUpload.style.filter = 'blur(' + 0 * 3 + 'px)';
+    imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
+    imgUploadEffectLevel.classList.add('hidden');
+    imgUploadEffectLevel.value = '';
+  }
+};
+
+var getImgUploadOverlay = function () {
+  uploadFile.addEventListener('change', function () {
+    imgUploadOverlay.classList.remove('hidden');
+    var coordEnd = effectLevelLine.getBoundingClientRect().width;
+    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
+    pinSlayder.style.left = scaleCoord + '%';
+    effectLevelDepth.style.width = scaleCoord + '%';
+    getPhotoCssEffect(1);
+  });
+};
+
+
+var getCloseUploadPhoto = function () {
+  uploadPhotoCancel.addEventListener(
+      'click', function () {
+        imgUploadOverlay.classList.add('hidden');
+        imgUploadOverlay.value = '';
+      }
+  );
+  document.addEventListener('keydown', function (evt) {
+    if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
+      imgUploadOverlay.classList.add('hidden');
+      imgUploadOverlay.value = '';
+    }
+  });
 };
 
 var addEventListenerRadio = function (radioArr) {
   radioArr.addEventListener('click', function () {
-    getPhotoCssEffect(getPinSlayderResultIntro());
+    /* getPhotoCssEffect(getPinSlayderResultIntro()); */
+    var coordEnd = effectLevelLine.getBoundingClientRect().width;
+    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
+    pinSlayder.style.left = scaleCoord + '%';
+    effectLevelDepth.style.width = scaleCoord + '%';
+    getPhotoCssEffect(1);
   });
 };
 
@@ -269,22 +298,49 @@ var addEventListenerRadioResult = function () {
   }
 };
 
+/* Кусок module5-task1 */
+
 var addEventListenerPinSlayder = function () {
-  var UpDownPinSlayder = {
-    down: 0,
-    up: 0
-  };
   pinSlayder.addEventListener('mousedown', function (evt) {
-    UpDownPinSlayder.down = evt.pageX;
+    evt.preventDefault();
+
+    /* Запомним координаты точки, с которой мы начали перемещать диалог. */
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: moveEvt.clientX
+      };
+
+      var coord = shift.x - effectLevelLine.getBoundingClientRect().left;
+      var coordEnd = effectLevelLine.getBoundingClientRect().width;
+      var scaleCoord = Math.round((100 / coordEnd) * coord);
+
+      if ((shift.x > effectLevelLine.getBoundingClientRect().left) && (shift.x < effectLevelLine.getBoundingClientRect().right)) {
+        pinSlayder.style.left = scaleCoord + '%';
+
+        effectLevelDepth.style.width = scaleCoord + '%';
+      }
+
+      getPhotoCssEffect(scaleCoord / 100);
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
-  pinSlayder.addEventListener('mouseup', function (evt) {
-    UpDownPinSlayder.up = evt.pageX;
-    getPhotoCssEffect((UpDownPinSlayder.up * getPinSlayderResultIntro()) / UpDownPinSlayder.down);
-  });
+
 };
 
+
 var slayderResult = function () {
-  getPhotoCssEffect(getPinSlayderResultIntro());
   addEventListenerRadioResult();
   addEventListenerPinSlayder();
 };
