@@ -24,11 +24,6 @@
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
-  window.formPhotoEditing = {
-    inputTextHashtags: inputTextHashtags,
-    imgUpload: imgUpload
-  };
-
   var isInputNameInFocus = function () {
     return (inputTextHashtags === document.activeElement) || (inputTextDescription === document.activeElement);
   };
@@ -155,51 +150,15 @@
     }
   };
 
-  /* Кусок module5-task1 */
-
-  var addEventListenerPinSlayder = function () {
-    pinSlayder.addEventListener('mousedown', function (evt) {
-      evt.preventDefault();
-
-      /* Запомним координаты точки, с которой мы начали перемещать диалог. */
-
-      var onMouseMove = function (moveEvt) {
-        moveEvt.preventDefault();
-
-        var shift = {
-          x: moveEvt.clientX
-        };
-
-        var coord = shift.x - effectLevelLine.getBoundingClientRect().left;
-        var coordEnd = effectLevelLine.getBoundingClientRect().width;
-        var scaleCoord = Math.round((100 / coordEnd) * coord);
-
-        if ((shift.x > effectLevelLine.getBoundingClientRect().left) && (shift.x < effectLevelLine.getBoundingClientRect().right)) {
-          pinSlayder.style.left = scaleCoord + '%';
-
-          effectLevelDepth.style.width = scaleCoord + '%';
-        }
-
-        getPhotoCssEffect(scaleCoord / 100);
-      };
-
-      var onMouseUp = function (upEvt) {
-        upEvt.preventDefault();
-
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-      };
-
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    });
-
-  };
-
-
-  var slayderResult = function () {
-    addEventListenerRadioResult();
-    addEventListenerPinSlayder();
+  window.formPhotoEditing = {
+    inputTextHashtags: inputTextHashtags,
+    imgUpload: imgUpload,
+    pinSlayder: pinSlayder,
+    effectLevelLine: effectLevelLine,
+    effectLevelDepth: effectLevelDepth,
+    getPhotoCssEffect: getPhotoCssEffect,
+    addEventListenerRadioResult: addEventListenerRadioResult,
+    imgUploadOverlay: imgUploadOverlay
   };
 
   closeBigPictures();
@@ -208,5 +167,4 @@
   getCloseUploadPhoto();
   getPinSlayderResultIntro();
   getPhotoCssEffect();
-  slayderResult();
 })();

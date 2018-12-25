@@ -7,12 +7,14 @@
     photoUsers: photoUsers
   };
 
+  console.log(window.backend.qqq);
+
   var getAllPhoto = function () {
     var allPhotos = [];
     for (var i = 0; i < window.data.SUMM_USER_PHOTO; i++) {
       var userPhoto = window.data.userPhotoTemplate.cloneNode(true);
 
-      userPhoto.querySelector('.picture__img').setAttribute('src', photoUsers[i].url);
+      userPhoto.querySelector('.picture__img').setAttribute('src', photoUsers[1].url/*window.ffff.qqq*/);
 
       userPhoto.querySelector('.picture__likes').textContent = photoUsers[i].likes;
 
