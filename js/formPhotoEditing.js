@@ -1,14 +1,8 @@
 'use strict';
 
 (function () {
-  var bigPicture = window.preview.bigPicture;
-
   var ESC_KEYCODE = 27;
-  var bigPictureCancel = document.querySelector('.big-picture__cancel');
   var uploadPhotoCancel = document.querySelector('.img-upload__cancel');
-  var userPhotoBuilding = document.querySelectorAll('.picture');
-  var bigPictureDiv = document.querySelector('.big-picture__img');
-  var bigPictureImg = bigPictureDiv.querySelector('img');
   var uploadFile = document.querySelector('#upload-file');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
   var pinSlayder = document.querySelector('.effect-level__pin');

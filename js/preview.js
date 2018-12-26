@@ -42,12 +42,20 @@
 (function () {
   var bigPicture = document.querySelector('.big-picture');
 
+  var ESC_KEYCODE = 27;
+
+  var userPhotoBuilding = window.data.userPhotoContainer;
+  var bigPictureDiv = document.querySelector('.big-picture__img');
+  var bigPictureImg = bigPictureDiv.querySelector('img');
+  var bigPictureCancel = document.querySelector('.big-picture__cancel');
+
   var SOCIAL_COMMENTS_VISUAL = 3;
 
   var getBigPicture = function (response) {
 
     for (var j = 0; j < response.length; j++) {
       bigPicture.querySelector('.big-picture__img').setAttribute('src', response[j].url);
+      /*bigPictureImg.setAttribute('src', response[j].url);*/
 
       bigPicture.querySelector('.likes-count').textContent = response[j].likes;
 
@@ -60,7 +68,7 @@
 
       var socialComments = function () {
         var socialCommentsAll = '';
-        for (var i = 0; i < /*SOCIAL_COMMENTS_VISUAL*/ 1; i++) {
+        for (var i = 0; i < SOCIAL_COMMENTS_VISUAL; i++) {
           socialCommentsAll = socialCommentsAll + oneSocialComments();
         }
         return socialCommentsAll;
@@ -73,12 +81,6 @@
     }
 
   };
-
-  var userPhotoBuilding = document.querySelectorAll('.picture');
-  var bigPictureDiv = document.querySelector('.big-picture__img');
-  var bigPictureImg = bigPictureDiv.querySelector('img');
-  var ESC_KEYCODE = 27;
-  var bigPictureCancel = document.querySelector('.big-picture__cancel');
 
   var closeBigPictures = function () {
     bigPictureCancel.addEventListener(
@@ -93,18 +95,18 @@
     });
   };
 
-  var getClickMinPictures = function (photoOpen, o, uuu) {
-    photoOpen.addEventListener('click', function () {
+  var getClickMinPictures = function (k, uuu) {
+    return function () {
       getBigPicture(uuu);
-      console.log(1);
       bigPicture.classList.remove('hidden');
-      bigPictureImg.src = uuu[o].url;
-    });
+      bigPictureImg.src = uuu[k].url;
+      console.log(uuu[k].url);
+    };
   };
 
   var openBigPictures = function (uuu) {
-    for (var k = 0; k < userPhotoBuilding.length; k++) {
-      getClickMinPictures(userPhotoBuilding[k], k, uuu);
+    for (var k = 0; k < uuu.length; k++) {
+      userPhotoBuilding.addEventListener('click', getClickMinPictures(k, uuu));
     }
   };
 
