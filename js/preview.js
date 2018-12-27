@@ -45,6 +45,8 @@
   var ESC_KEYCODE = 27;
 
   var userPhotoBuilding = window.data.userPhotoContainer;
+  /*var userPhotoBuilding = document.querySelectorAll('.picture');*/
+  /*var userPhotoBuilding = window.backend.windowLoad(window.allPictures.getAllPhotoBuild());*/
   var bigPictureDiv = document.querySelector('.big-picture__img');
   var bigPictureImg = bigPictureDiv.querySelector('img');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
@@ -53,32 +55,32 @@
 
   var getBigPicture = function (response) {
 
-    for (var j = 0; j < response.length; j++) {
-      bigPicture.querySelector('.big-picture__img').setAttribute('src', response[j].url);
-      /*bigPictureImg.setAttribute('src', response[j].url);*/
+    bigPicture.querySelector('.big-picture__img').setAttribute('src', response.url);
 
-      bigPicture.querySelector('.likes-count').textContent = response[j].likes;
+    bigPicture.querySelector('.likes-count').textContent = response.likes;
 
-      bigPicture.querySelector('.comments-count').textContent = response[j].comments.length;
+    bigPicture.querySelector('.comments-count').textContent = response.comments.length;
 
-      var oneSocialComments = function () {
-        var oneSocialCommentsString = '<li class="social__comment"><img class="social__picture" src="' + response[j].comments[0].avatar + '" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + response[j].comments[0].message + '</p></li>';
-        return oneSocialCommentsString;
-      };
+    var oneSocialComments = function () {
+      console.log(response.comments[0]);
+      for (var i = 0; i < response.comments.length; i++) {
+        var oneSocialCommentsString = '<li class="social__comment"><img class="social__picture" src="' + response.comments[i].avatar + '" alt="Аватар комментатора фотографии" width="35" height="35"><p class="social__text">' + response.comments[i].message + '</p></li>';
+      }
 
-      var socialComments = function () {
-        var socialCommentsAll = '';
-        for (var i = 0; i < SOCIAL_COMMENTS_VISUAL; i++) {
-          socialCommentsAll = socialCommentsAll + oneSocialComments();
-        }
-        return socialCommentsAll;
-      };
+      return oneSocialCommentsString;
+    };
 
-      bigPicture.querySelector('.social__comments').innerHTML = socialComments();
+    var socialComments = function () {
+      var socialCommentsAll = '';
+      for (var i = 0; i < SOCIAL_COMMENTS_VISUAL; i++) {
+        socialCommentsAll = socialCommentsAll + oneSocialComments();
+      }
+      return socialCommentsAll;
+    };
 
-      bigPicture.querySelector('.social__caption').textContent = response[j].description;
+    bigPicture.querySelector('.social__comments').innerHTML = socialComments();
 
-    }
+    bigPicture.querySelector('.social__caption').textContent = response.description;
 
   };
 
@@ -95,18 +97,21 @@
     });
   };
 
-  var getClickMinPictures = function (k, uuu) {
+  var getClickMinPictures = function (iii) {
     return function () {
-      getBigPicture(uuu);
+      getBigPicture(iii);
       bigPicture.classList.remove('hidden');
-      bigPictureImg.src = uuu[k].url;
-      console.log(uuu[k].url);
+      bigPictureImg.src = iii.url;
+      console.log(iii.url);
     };
   };
 
+  console.log(window.allPictures.getAllPhoto);
+
   var openBigPictures = function (uuu) {
     for (var k = 0; k < uuu.length; k++) {
-      userPhotoBuilding.addEventListener('click', getClickMinPictures(k, uuu));
+      console.log(window.allPictures.getAllPhoto(uuu)[k]);
+      window.allPictures.getAllPhoto(uuu)[k].addEventListener('click', getClickMinPictures(uuu[k]));
     }
   };
 
