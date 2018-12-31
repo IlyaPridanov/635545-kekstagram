@@ -3,48 +3,69 @@
 /* ОТПРАВКА ФОРМЫ*/
 
 (function () {
-  var URL = 'https://js.dump.academy/kekstagram';
+  var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
 
-  window.upload = function (data, onSuccess, onError) {
+  window.upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
-
     xhr.responseType = 'json';
+
     xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError();
+      }
     });
 
-    xhr.open('POST', URL);
+    xhr.addEventListener('error', function () {
+      onError();
+    });
+
+    xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
   };
-})();
 
-var form = document.querySelector('.img-upload__form');
+  window.backend = {
+    windowUpload: window.upload
+  };
 
-form.addEventListener('submit', function (evt) {
-  window.upload(new FormData(form), function () {
-    window.formPhotoEditing.imgUploadOverlay.classList.add('hidden');
-  });
-  evt.preventDefault();
-});
 
-/* ЗАГРУЗКА ДАННЫХ*/
+  /* ЗАГРУЗКА ДАННЫХ*/
 
-(function () {
-  var URL = 'https://js.dump.academy/kekstagram/data';
 
-  window.load = function (onLoad) {
+  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+
+  window.load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
 
-    xhr.open('GET', URL);
+    xhr.open('GET', URL_LOAD);
 
     xhr.addEventListener('load', function () {
-      onLoad(xhr.response);
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+      }
     });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = 10000;
 
     xhr.send();
   };
 
-  window.backend = {windowLoad: window.load};
+  window.backend = {
+    windowLoad: window.load,
+    windowUpload: window.upload
+  };
+
 })();

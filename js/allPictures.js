@@ -2,9 +2,9 @@
 
 (function () {
   var photoUsers = window.data.generatePhotoUsers();
+  var allPhotos = [];
 
   var getAllPhoto = function (response) {
-    var allPhotos = [];
     for (var i = 0; i < response.length; i++) {
       var userPhoto = window.data.userPhotoTemplate.cloneNode(true);
 
@@ -14,27 +14,33 @@
 
       userPhoto.querySelector('.picture__comments').textContent = response[i].comments.length;
 
-      var fragment = document.createDocumentFragment();
-
-      fragment.appendChild(userPhoto);
-
-      allPhotos[i] = fragment;
+      allPhotos.push(userPhoto);
     }
+    return allPhotos;
+  };
+
+  var getFragment = function (response) {
+    var fragment = document.createDocumentFragment();
+    getAllPhoto(response);
+    for (var i = 0; i < allPhotos.length; i++) {
+      fragment.appendChild(allPhotos[i]);
+    }
+    return fragment;
+  };
+
+  var getPhotos = function () {
     return allPhotos;
   };
 
 
   var getAllPhotoBuild = function (response) {
-    var arrAllBuildPhotos = getAllPhoto(response);
-    for (var i = 0; i < response.length; i++) {
-      window.data.userPhotoContainer.appendChild(arrAllBuildPhotos[i]);
-    }
+    window.data.userPhotoContainer.appendChild(getFragment(response));
   };
-
-  window.backend.windowLoad(getAllPhotoBuild);
 
   window.allPictures = {
     photoUsers: photoUsers,
-    getAllPhotoBuild: getAllPhotoBuild
+    getAllPhotoBuild: getAllPhotoBuild,
+    getAllPhoto: getAllPhoto,
+    getPhotos: getPhotos
   };
 })();

@@ -22,40 +22,6 @@
     return (inputTextHashtags === document.activeElement) || (inputTextDescription === document.activeElement);
   };
 
-  /*var closeBigPictures = function () {
-    bigPictureCancel.addEventListener(
-        'click', function () {
-          bigPicture.classList.add('hidden');
-        }
-    );
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        bigPicture.classList.add('hidden');
-      }
-    });
-  };
-
-  console.log(window.backend.windowLoad(window.preview.getBigPicture()));
-
-  var getClickMinPictures = function (photoOpen, o, uuu) {
-    photoOpen.addEventListener('click', function () {
-      /*window.preview.getBigPicture();
-      window.preview.getBigPicture(uuu);
-      console.log(1);
-      /*bigPictureImg.src = window.allPictures.photoUsers[o].url;
-      bigPicture.classList.remove('hidden');
-      bigPictureImg.src = uuu[o].url;
-    });
-  };
-
-  var openBigPictures = function (uuu) {
-    for (var k = 0; k < userPhotoBuilding.length; k++) {
-      getClickMinPictures(userPhotoBuilding[k], k, uuu);
-    }
-  };
-
-  window.backend.windowLoad(openBigPictures);*/
-
   var getWhoRadioChecked = function () {
     for (var i = 0; i < effectsRadio.length; i++) {
       if (effectsRadio[i].checked) {
@@ -162,8 +128,6 @@
     imgUploadOverlay: imgUploadOverlay
   };
 
-  /*closeBigPictures();
-  openBigPictures();*/
   getImgUploadOverlay();
   getCloseUploadPhoto();
   getPinSlayderResultIntro();
