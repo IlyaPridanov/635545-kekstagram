@@ -2,7 +2,6 @@
 
 (function () {
   var inputTextHashtags = window.formPhotoEditing.inputTextHashtags;
-  var form = document.querySelector('.img-upload__form');
 
   var hashtagsErrorText = {
     fiveHashtags: 'Не более пяти хештегов',
@@ -90,63 +89,5 @@
   };
 
   inputTextHashtags.addEventListener('change', onHashtagInput);
-
-  /* ОТПРАВКА ФОРМЫ */
-  var ESC_KEYCODE = 27;
-  var successTemplate = document.querySelector('#success')
-  .content
-  .querySelector('.success');
-
-  var errorTemplate = document.querySelector('#error')
-  .content
-  .querySelector('.error');
-  var main = document.querySelector('main');
-
-  var successForm = function () {
-    window.formPhotoEditing.imgUploadOverlay.classList.add('hidden');
-    var success = successTemplate.cloneNode(true);
-    main.appendChild(success);
-    var successButton = document.querySelector('.success__button');
-
-    successButton.addEventListener(
-        'click', function () {
-          console.log(success);
-          success.classList.add('hidden');
-        }
-    );
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        success.classList.add('hidden');
-      }
-    });
-
-  };
-
-  var errorForm = function () {
-    var error = errorTemplate.cloneNode(true);
-    main.appendChild(error);
-    var errorButton = document.querySelector('.error__button');
-
-    errorButton.addEventListener(
-        'click', function () {
-          console.log(error);
-          error.classList.add('hidden');
-        }
-    );
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        error.classList.add('hidden');
-      }
-    });
-  };
-
-  form.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    window.backend.windowUpload(
-        new FormData(form),
-        successForm,
-        errorForm
-    );
-  });
 })();
 
