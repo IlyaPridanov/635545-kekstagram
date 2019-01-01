@@ -22,7 +22,6 @@
     successButton.addEventListener(
         'click', function () {
           success.remove();
-          console.log(success);
           success.classList.add('hidden');
           main.removeChild(success);
         }
@@ -45,7 +44,6 @@
     errorButton.addEventListener(
         'click', function () {
           error.remove();
-          console.log(error);
           error.classList.add('hidden');
           main.removeChild(error);
         }
