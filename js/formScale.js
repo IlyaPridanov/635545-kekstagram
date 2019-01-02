@@ -7,7 +7,7 @@
 
   var imgUpload = window.formPhotoEditing.imgUpload;
 
-  var addEventListenerScaleControl = function () {
+  var setScaleControlListener = function () {
     scaleControlValue.value = '100%';
     scaleControlSmaller.addEventListener('click', function () {
       if (parseFloat(scaleControlValue.value) > 0) {
@@ -23,6 +23,6 @@
     });
   };
 
-  addEventListenerScaleControl();
+  setScaleControlListener();
 })();
 
