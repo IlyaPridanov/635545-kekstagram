@@ -1,19 +1,15 @@
 'use strict';
 
 (function () {
-  var photoUsers = window.data.generatePhotoUsers();
+  /*var photoUsers = window.data.generatePhotoUsers();*/
   var allPhotos = [];
 
   var getAllPhoto = function (response) {
     for (var i = 0; i < response.length; i++) {
       var userPhoto = window.data.userPhotoTemplate.cloneNode(true);
-
-      userPhoto.querySelector('.picture__img').setAttribute('src', response[i].url);
-
+      userPhoto.querySelector('.picture__img').src = response[i].url;
       userPhoto.querySelector('.picture__likes').textContent = response[i].likes;
-
       userPhoto.querySelector('.picture__comments').textContent = response[i].comments.length;
-
       allPhotos.push(userPhoto);
     }
     return allPhotos;
@@ -38,7 +34,7 @@
   };
 
   window.allPictures = {
-    photoUsers: photoUsers,
+    /*photoUsers: photoUsers,*/
     getAllPhotoBuild: getAllPhotoBuild,
     getAllPhoto: getAllPhoto,
     getPhotos: getPhotos

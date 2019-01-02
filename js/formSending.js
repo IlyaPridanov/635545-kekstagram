@@ -26,14 +26,20 @@
           main.removeChild(success);
         }
     );
-    document.addEventListener('keydown', function (evt) {
+
+    var onSuccessEscListener = function () {
+      document.addEventListener('keydown', successEscListener);
+    };
+
+    var successEscListener = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         success.remove();
         success.classList.add('hidden');
         main.removeChild(success);
       }
-    });
-
+      document.removeEventListener('keydown', successEscListener);
+    };
+    onSuccessEscListener();
   };
 
   var errorForm = function () {
@@ -48,18 +54,25 @@
           main.removeChild(error);
         }
     );
-    document.addEventListener('keydown', function (evt) {
+
+    var onErrorEscListener = function () {
+      document.addEventListener('keydown', errorEscListener);
+    };
+
+    var errorEscListener = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         error.remove();
         error.classList.add('hidden');
         main.removeChild(error);
       }
-    });
+      document.removeEventListener('keydown', errorEscListener);
+    };
+    onErrorEscListener();
   };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.windowUpload(
+    window.backend.upload(
         new FormData(form),
         successForm,
         errorForm

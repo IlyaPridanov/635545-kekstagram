@@ -5,12 +5,16 @@
 (function () {
   var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
 
-  window.upload = function (data, onLoad, onError) {
+  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+
+  var NORMAL_STATUS = 200;
+
+  var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === NORMAL_STATUS) {
         onLoad(xhr.response);
       } else {
         onError();
@@ -25,17 +29,9 @@
     xhr.send(data);
   };
 
-  window.backend = {
-    windowUpload: window.upload
-  };
-
-
   /* ЗАГРУЗКА ДАННЫХ*/
 
-
-  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
-
-  window.load = function (onLoad, onError) {
+  var send = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -43,7 +39,7 @@
     xhr.open('GET', URL_LOAD);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === NORMAL_STATUS) {
         onLoad(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -64,8 +60,8 @@
   };
 
   window.backend = {
-    windowLoad: window.load,
-    windowUpload: window.upload
+    send: send,
+    upload: upload
   };
 
 })();

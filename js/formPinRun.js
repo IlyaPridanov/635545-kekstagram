@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var addEventListenerPinSlayder = function () {
+  var setPinSliderHandler = function () {
     window.formPhotoEditing.pinSlayder.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
@@ -12,11 +12,11 @@
           x: moveEvt.clientX
         };
 
-        var coord = shift.x - window.formPhotoEditing.effectLevelLine.getBoundingClientRect().left;
-        var coordEnd = window.formPhotoEditing.effectLevelLine.getBoundingClientRect().width;
+        var coord = shift.x - window.formPhotoEditing.window.formPhotoEditing.rect.left;
+        var coordEnd = window.formPhotoEditing.window.formPhotoEditing.rect.width;
         var scaleCoord = Math.round((100 / coordEnd) * coord);
 
-        if ((shift.x > window.formPhotoEditing.effectLevelLine.getBoundingClientRect().left) && (shift.x < window.formPhotoEditing.effectLevelLine.getBoundingClientRect().right)) {
+        if ((shift.x > window.formPhotoEditing.window.formPhotoEditing.rect.left) && (shift.x < window.formPhotoEditing.window.formPhotoEditing.rect.right)) {
           window.formPhotoEditing.pinSlayder.style.left = scaleCoord + '%';
 
           window.formPhotoEditing.effectLevelDepth.style.width = scaleCoord + '%';
@@ -39,8 +39,8 @@
   };
 
   var slayderResult = function () {
-    window.formPhotoEditing.addEventListenerRadioResult();
-    addEventListenerPinSlayder();
+    window.formPhotoEditing.setRadioListenerResult();
+    setPinSliderHandler();
   };
 
   slayderResult();
