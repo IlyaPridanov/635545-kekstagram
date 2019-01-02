@@ -10,16 +10,16 @@
     'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
   ];*/
 
-  var DESCRIPTION_STRINGS = [
+  /*var DESCRIPTION_STRINGS = [
     'Тестим новую камеру!',
     'Затусили с друзьями на море',
     'Как же круто тут кормят',
     'Отдыхаем...',
     'Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......',
     'Вот это тачка!'
-  ];
+  ];*/
 
-  var SUMM_USER_PHOTO = 25;
+  /*var SUMM_USER_PHOTO = 25;*/
 
   var userPhotoTemplate = document.querySelector('#picture')
     .content
@@ -27,16 +27,16 @@
 
   var userPhotoContainer = document.querySelector('.pictures');
 
-  var getRandomInt = function (min, max) {
+  /*var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+  };*/
 
   /*var getRandomComment = function () {
     var commentSpeachQuantity = getRandomInt(1, 2);
     return (commentSpeachQuantity === 1) ? COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)] : (COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)] + COMMENT_STRINGS[getRandomInt(0, COMMENT_STRINGS.length - 1)]);
   };*/
 
-  var commentQuantity = getRandomInt(1, 40);
+  /*var commentQuantity = getRandomInt(1, 40);*/
 
   /*var getCommentsArray = function () {
     var ArrayComments = [];
@@ -46,7 +46,7 @@
     return ArrayComments;
   };*/
 
-  var getRandomArrIndex = function () {
+  /*var getRandomArrIndex = function () {
     var indexArrNumbers = [];
     for (var i = 0; i < SUMM_USER_PHOTO; i++) {
       indexArrNumbers[i] = i;
@@ -61,7 +61,7 @@
     return randomIndexNumbers;
   };
 
-  var randomIndexArrNumbers = getRandomArrIndex();
+  var randomIndexArrNumbers = getRandomArrIndex();*/
 
   /*var getPhoto = function (i) {
     var photo = {
@@ -85,10 +85,10 @@
   document.querySelector('.comments-loader').classList.add('visually-hidden');
 
   window.data = {
-    commentQuantity: commentQuantity,
-    getRandomInt: getRandomInt,
+    /*commentQuantity: commentQuantity,*/
+    /*getRandomInt: getRandomInt,*/
     /*generatePhotoUsers: generatePhotoUsers,*/
-    SUMM_USER_PHOTO: SUMM_USER_PHOTO,
+    /*SUMM_USER_PHOTO: SUMM_USER_PHOTO,*/
     userPhotoTemplate: userPhotoTemplate,
     userPhotoContainer: userPhotoContainer
   };
