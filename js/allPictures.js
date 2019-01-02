@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  /*var photoUsers = window.data.generatePhotoUsers();*/
   var allPhotos = [];
 
   var getAllPhoto = function (response) {
@@ -34,7 +33,6 @@
   };
 
   window.allPictures = {
-    /*photoUsers: photoUsers,*/
     getAllPhotoBuild: getAllPhotoBuild,
     getAllPhoto: getAllPhoto,
     getPhotos: getPhotos
