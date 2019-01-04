@@ -82,6 +82,10 @@
 
 
   var getAllPhotoBuild = function (response) {
+    var removeTegArr = window.data.userPhotoContainer.querySelectorAll('a');
+    for (var i = 0; i < removeTegArr.length; i++) {
+      window.data.userPhotoContainer.removeChild(removeTegArr[i]);
+    }
     window.data.userPhotoContainer.appendChild(getFragment(response));
     imgFilters.classList.remove('img-filters--inactive');
   };
@@ -90,12 +94,12 @@
 
   var getRebootTimeout = function (functionTimeout) {
     var lastTimeout;
-    if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
-    }
     lastTimeout = window.setTimeout(function () {
       functionTimeout();
     }, 300);
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
   };
 
   filterPopular.addEventListener('click', function () {

@@ -31,7 +31,6 @@
   var socialComments = function (response) {
     var socialCommentsAll = '';
     socialCommentsAll = oneSocialComments(response);
-    console.log(response.comments.length);
     return socialCommentsAll;
   };
 
@@ -48,7 +47,6 @@
     }
     commentsLoader.addEventListener('click', function () {
       SOCIAL_COMMENTS_VISUAL += 5;
-      console.log(SOCIAL_COMMENTS_VISUAL);
       bigPicture.querySelector('.social__comments').innerHTML = socialComments(response);
       if (SOCIAL_COMMENTS_VISUAL < response.comments.length) {
         commentsNow.textContent = SOCIAL_COMMENTS_VISUAL;
