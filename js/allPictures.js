@@ -28,6 +28,7 @@
 
   var getAllPhoto = function (response) {
     if (filterNew.classList.contains('img-filters__button--active')) {
+      allPhotos = [];
       var randomArrIndex = getRandomArrIndex();
       console.log(randomArrIndex);
       for (var j = 0; j < 10; j++) {
@@ -40,6 +41,7 @@
       console.log(filterNew.classList.contains('img-filters__button--active'));
     }
     if (filterDiscussed.classList.contains('img-filters__button--active')) {
+      allPhotos = [];
       response.sort(function (a, b) {
         return b.comments.length - a.comments.length;
       });
@@ -53,6 +55,7 @@
       }
     }
     if (filterPopular.classList.contains('img-filters__button--active')) {
+      allPhotos = [];
       for (var i = 0; i < response.length; i++) {
         userPhoto = window.data.userPhotoTemplate.cloneNode(true);
         userPhoto.querySelector('.picture__img').src = response[i].url;
