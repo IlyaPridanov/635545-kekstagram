@@ -124,6 +124,9 @@
   window.allPictures = {
     getAllPhotoBuild: getAllPhotoBuild,
     getAllPhoto: getAllPhoto,
-    getPhotos: getPhotos
+    getPhotos: getPhotos,
+    filterPopular: filterPopular,
+    filterNew: filterNew,
+    filterDiscussed: filterDiscussed
   };
 })();

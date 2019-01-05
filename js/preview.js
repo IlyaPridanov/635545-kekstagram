@@ -91,13 +91,24 @@
   var openBigPictures = function (response) {
     window.allPictures.getAllPhotoBuild(response);
     /*var allPhotos = window.allPictures.getAllPhoto(response);*/
-    var allPhotos = window.data.userPhotoContainer.querySelectorAll('a')
+    var allPhotos = [];
+    allPhotos = window.data.userPhotoContainer.querySelectorAll('a');
     for (var k = 0; k < allPhotos.length; k++) {
       allPhotos[k].addEventListener('click', getClickMinPictures(response[k]));
     }
   };
 
   window.backend.send(openBigPictures);
+
+  window.allPictures.filterPopular.addEventListener('click', function () {
+    window.backend.send(openBigPictures);
+  });
+  window.allPictures.filterNew.addEventListener('click', function () {
+    window.backend.send(openBigPictures);
+  });
+  window.allPictures.filterDiscussed.addEventListener('click', function () {
+    window.backend.send(openBigPictures);
+  });
 
   window.preview = {
     getBigPicture: getBigPicture,
