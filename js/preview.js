@@ -89,8 +89,9 @@
   };
 
   var openBigPictures = function (response) {
-    /*window.allPictures.getAllPhotoBuild(response);*/
-    var allPhotos = window.allPictures.getAllPhoto(response);
+    window.allPictures.getAllPhotoBuild(response);
+    /*var allPhotos = window.allPictures.getAllPhoto(response);*/
+    var allPhotos = window.data.userPhotoContainer.querySelectorAll('a')
     for (var k = 0; k < allPhotos.length; k++) {
       allPhotos[k].addEventListener('click', getClickMinPictures(response[k]));
     }
@@ -101,7 +102,8 @@
   window.preview = {
     getBigPicture: getBigPicture,
     bigPicture: bigPicture,
-    closeBigPictures: closeBigPictures
+    closeBigPictures: closeBigPictures,
+    openBigPictures: openBigPictures
   };
 
   closeBigPictures();
