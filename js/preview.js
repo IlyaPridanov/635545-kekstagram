@@ -35,6 +35,7 @@
   };
 
   var getBigPicture = function (response) {
+    console.log('Кликается картнка с адресом ' + response.url);
     bigPicture.querySelector('.big-picture__img').setAttribute('src', response.url);
     bigPicture.querySelector('.likes-count').textContent = response.likes;
     bigPicture.querySelector('.comments-count').textContent = response.comments.length;
@@ -88,25 +89,39 @@
     };
   };
 
+  var flagNew = window.allPictures.flagNew;
+
   var openBigPictures = function (response) {
     window.allPictures.getAllPhotoBuild(response);
-    /*var allPhotos = window.allPictures.getAllPhoto(response);*/
     var allPhotos = [];
+    /*allPhotos = window.allPictures.getAllPhoto(response);*/
     allPhotos = window.data.userPhotoContainer.querySelectorAll('a');
-    for (var k = 0; k < allPhotos.length; k++) {
-      allPhotos[k].addEventListener('click', getClickMinPictures(response[k]));
+    if (flagNew) {
+      console.log(window.allPictures.randomArrIndex);
+      for (var p = 0; p < allPhotos.length; p++) {
+        allPhotos[p].addEventListener('click', getClickMinPictures(response[window.allPictures.randomArrIndex[p]]));
+      }
+    }
+    if (!flagNew) {
+      for (var k = 0; k < allPhotos.length; k++) {
+        allPhotos[k].addEventListener('click', getClickMinPictures(response[k]));
+      }
     }
   };
 
   window.backend.send(openBigPictures);
 
   window.allPictures.filterPopular.addEventListener('click', function () {
+    flagNew = false;
     window.backend.send(openBigPictures);
   });
   window.allPictures.filterNew.addEventListener('click', function () {
+    flagNew = true;
+    console.log(window.allPictures.randomArrIndex);
     window.backend.send(openBigPictures);
   });
   window.allPictures.filterDiscussed.addEventListener('click', function () {
+    flagNew = false;
     window.backend.send(openBigPictures);
   });
 
