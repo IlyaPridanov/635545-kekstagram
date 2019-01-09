@@ -12,11 +12,13 @@
           x: moveEvt.clientX
         };
 
-        var coord = shift.x - window.formPhotoEditing.window.formPhotoEditing.rect.left;
-        var coordEnd = window.formPhotoEditing.window.formPhotoEditing.rect.width;
+        console.log(window.formPhotoEditing.rect.width);
+
+        var coord = shift.x - /*window.formPhotoEditing.*/window.formPhotoEditing.rect.left;
+        var coordEnd = /*window.formPhotoEditing.*/window.formPhotoEditing.rect.width;
         var scaleCoord = Math.round((100 / coordEnd) * coord);
 
-        if ((shift.x > window.formPhotoEditing.window.formPhotoEditing.rect.left) && (shift.x < window.formPhotoEditing.window.formPhotoEditing.rect.right)) {
+        if ((shift.x > /*window.formPhotoEditing.*/window.formPhotoEditing.rect.left) && (shift.x < /*window.formPhotoEditing.*/window.formPhotoEditing.rect.right)) {
           window.formPhotoEditing.pinSlayder.style.left = scaleCoord + '%';
 
           window.formPhotoEditing.effectLevelDepth.style.width = scaleCoord + '%';
@@ -46,3 +48,5 @@
   slayderResult();
 
 })();
+
+console.log(window.formPhotoEditing.rect.width);

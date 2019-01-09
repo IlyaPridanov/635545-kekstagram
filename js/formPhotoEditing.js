@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEYCODE = 27;
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var uploadPhotoCancel = document.querySelector('.img-upload__cancel');
   var uploadFile = document.querySelector('#upload-file');
@@ -79,6 +80,21 @@
 
   var getImgUploadOverlay = function () {
     uploadFile.addEventListener('change', function () {
+      var file = uploadFile.files[0];
+      var fileName = file.name.toLowerCase();
+      var matches = FILE_TYPES.some(function (it) {
+        return fileName.endsWith(it);
+      });
+
+      if (matches) {
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+          imgUpload.src = reader.result;
+        });
+        reader.readAsDataURL(file);
+      }
+
+
       imgUploadOverlay.classList.remove('hidden');
       var coordEnd = rect.width;
       var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
