@@ -14,11 +14,12 @@
 
         console.log(window.formPhotoEditing.rect.width);
 
-        var coord = shift.x - /*window.formPhotoEditing.*/window.formPhotoEditing.rect.left;
-        var coordEnd = /*window.formPhotoEditing.*/window.formPhotoEditing.rect.width;
+        var rect = window.formPhotoEditing.effectLevelLine.getBoundingClientRect();
+        var coord = shift.x - rect.left;
+        var coordEnd = rect.width;
         var scaleCoord = Math.round((100 / coordEnd) * coord);
 
-        if ((shift.x > /*window.formPhotoEditing.*/window.formPhotoEditing.rect.left) && (shift.x < /*window.formPhotoEditing.*/window.formPhotoEditing.rect.right)) {
+        if ((shift.x > rect.left) && (shift.x < rect.right)) {
           window.formPhotoEditing.pinSlayder.style.left = scaleCoord + '%';
 
           window.formPhotoEditing.effectLevelDepth.style.width = scaleCoord + '%';

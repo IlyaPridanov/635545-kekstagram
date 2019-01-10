@@ -21,7 +21,7 @@
 
     successButton.addEventListener(
         'click', function () {
-          success.remove();
+          /*success.remove();*/
           success.classList.add('hidden');
           main.removeChild(success);
         }
@@ -33,7 +33,7 @@
 
     var successEscListener = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
-        success.remove();
+        /*success.remove();*/
         success.classList.add('hidden');
         main.removeChild(success);
       }
