@@ -21,7 +21,6 @@
 
     successButton.addEventListener(
         'click', function () {
-          /*success.remove();*/
           success.classList.add('hidden');
           main.removeChild(success);
         }
@@ -33,13 +32,25 @@
 
     var successEscListener = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
-        /*success.remove();*/
         success.classList.add('hidden');
         main.removeChild(success);
       }
       document.removeEventListener('keydown', successEscListener);
     };
     onSuccessEscListener();
+
+    var onSuccessArbitraryAreaListener = function () {
+      document.addEventListener('click', successArbitraryAreaListener);
+    };
+
+    var successArbitraryAreaListener = function (event) {
+      if (event.target === success) {
+        success.classList.add('hidden');
+        main.removeChild(success);
+        document.removeEventListener('click', successArbitraryAreaListener);
+      }
+    };
+    onSuccessArbitraryAreaListener();
   };
 
   var errorForm = function () {

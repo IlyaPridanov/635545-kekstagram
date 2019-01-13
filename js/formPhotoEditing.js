@@ -160,10 +160,8 @@
 
   var setRadioListener = function (radioArr) {
     radioArr.addEventListener('click', function () {
-      var coordEnd = rect.width;
-      var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
-      pinSlayder.style.left = scaleCoord + '%';
-      effectLevelDepth.style.width = scaleCoord + '%';
+      pinSlayder.style.left = '100%';
+      effectLevelDepth.style.width = '100%';
       getPhotoCssEffect(1);
     });
   };

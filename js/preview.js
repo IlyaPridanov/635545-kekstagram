@@ -37,6 +37,7 @@
   var getBigPicture = function (response) {
     console.log('Кликается картнка с адресом ' + response.url);
     bigPicture.querySelector('.big-picture__img').setAttribute('src', response.url);
+    /*bigPictureImg.focus();*/
     bigPicture.querySelector('.likes-count').textContent = response.likes;
     bigPicture.querySelector('.comments-count').textContent = response.comments.length;
 
