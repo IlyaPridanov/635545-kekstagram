@@ -1,9 +1,12 @@
 'use strict';
 
 (function () {
+  var MAX_HASHTAGS = 5;
+  var MAX_LENGTH_HASHTAGS = 20;
+
   var inputTextHashtags = window.formPhotoEditing.inputTextHashtags;
 
-  var hashtagsErrorText = {
+  var HashtagsErrorText = {
     fiveHashtags: 'Не более пяти хештегов',
     aloneLattice: 'Хеш-тег не может состоять только из одной решётки',
     space: 'Хэш-теги разделяются пробелами',
@@ -13,18 +16,17 @@
   };
 
   var checkLengthFiveHashtags = function (arr) {
-    if (arr.length > 5) {
-      return hashtagsErrorText.fiveHashtags;
-    } else {
-      return '';
+    if (arr.length > MAX_HASHTAGS) {
+      return HashtagsErrorText.fiveHashtags;
     }
+    return '';
   };
 
   var checkAloneLattice = function (arr) {
     var checkAloneLatticeResult = '';
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] === '#') {
-        checkAloneLatticeResult = hashtagsErrorText.aloneLattice;
+        checkAloneLatticeResult = HashtagsErrorText.aloneLattice;
         break;
       }
     }
@@ -35,7 +37,7 @@
     var checkNewHashtagsLatticeResult = '';
     for (var i = 0; i < arr.length; i++) {
       if (arr[i][0] !== '#') {
-        checkNewHashtagsLatticeResult = hashtagsErrorText.newHashtagsLattice;
+        checkNewHashtagsLatticeResult = HashtagsErrorText.newHashtagsLattice;
         break;
       }
     }
@@ -45,8 +47,8 @@
   var checkMaxLengthHashtags = function (arr) {
     var checkMaxLengthHashtagsResult = '';
     for (var i = 0; i < arr.length; i++) {
-      if (arr[i].length > 20) {
-        checkMaxLengthHashtagsResult = hashtagsErrorText.maxLengthHashtags;
+      if (arr[i].length > MAX_LENGTH_HASHTAGS) {
+        checkMaxLengthHashtagsResult = HashtagsErrorText.maxLengthHashtags;
         break;
       }
     }
@@ -62,7 +64,7 @@
       }
       for (var j = 0; j < arr.length; j++) {
         if ((arr[i].toUpperCase() === arr[j].toUpperCase()) && (i !== j)) {
-          checkSameHashtagsResult = hashtagsErrorText.sameHashtags;
+          checkSameHashtagsResult = HashtagsErrorText.sameHashtags;
           flag = true;
           break;
         }
