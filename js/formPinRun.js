@@ -2,7 +2,7 @@
 
 (function () {
   var setPinSliderHandler = function () {
-    window.formPhotoEditing.pinSlayder.addEventListener('mousedown', function (evt) {
+    window.formPhotoEditing.pinSlider.addEventListener('mousedown', function (evt) {
       evt.preventDefault();
 
       var onMouseMove = function (moveEvt) {
@@ -12,15 +12,13 @@
           x: moveEvt.clientX
         };
 
-        console.log(window.formPhotoEditing.rect.width);
-
         var rect = window.formPhotoEditing.effectLevelLine.getBoundingClientRect();
         var coord = shift.x - rect.left;
         var coordEnd = rect.width;
         var scaleCoord = Math.round((100 / coordEnd) * coord);
 
         if ((shift.x > rect.left) && (shift.x < rect.right)) {
-          window.formPhotoEditing.pinSlayder.style.left = scaleCoord + '%';
+          window.formPhotoEditing.pinSlider.style.left = scaleCoord + '%';
 
           window.formPhotoEditing.effectLevelDepth.style.width = scaleCoord + '%';
         }
@@ -41,13 +39,12 @@
 
   };
 
-  var slayderResult = function () {
+  var getSliderResult = function () {
     window.formPhotoEditing.setRadioListenerResult();
     setPinSliderHandler();
   };
 
-  slayderResult();
+  getSliderResult();
 
 })();
 
-console.log(window.formPhotoEditing.rect.width);
