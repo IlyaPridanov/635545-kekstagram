@@ -17,35 +17,46 @@
     window.formPhotoEditing.imgUploadOverlay.classList.add('hidden');
     var success = successTemplate.cloneNode(true);
     main.appendChild(success);
-    var successButton = document.querySelector('.success__button');
+    var successButton = success.querySelector('.success__button');
 
     successButton.addEventListener(
         'click', function () {
-          success.remove();
           success.classList.add('hidden');
           main.removeChild(success);
         }
     );
 
-    var onSuccessEscListener = function () {
-      document.addEventListener('keydown', successEscListener);
+    var setSuccessEscListener = function () {
+      document.addEventListener('keydown', onSuccessEscPress);
     };
 
-    var successEscListener = function (evt) {
+    var onSuccessEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
-        success.remove();
         success.classList.add('hidden');
         main.removeChild(success);
       }
-      document.removeEventListener('keydown', successEscListener);
+      document.removeEventListener('keydown', onSuccessEscPress);
     };
-    onSuccessEscListener();
+    setSuccessEscListener();
+
+    var onSuccessArbitraryAreaListener = function () {
+      document.addEventListener('click', successArbitraryAreaListener);
+    };
+
+    var successArbitraryAreaListener = function (event) {
+      if (event.target === success) {
+        success.classList.add('hidden');
+        main.removeChild(success);
+        document.removeEventListener('click', successArbitraryAreaListener);
+      }
+    };
+    onSuccessArbitraryAreaListener();
   };
 
   var errorForm = function () {
     var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
-    var errorButton = document.querySelector('.error__button');
+    var errorButton = error.querySelector('.error__button');
 
     errorButton.addEventListener(
         'click', function () {
@@ -55,19 +66,19 @@
         }
     );
 
-    var onErrorEscListener = function () {
-      document.addEventListener('keydown', errorEscListener);
+    var setErrorEscListener = function () {
+      document.addEventListener('keydown', onErrorEscPress);
     };
 
-    var errorEscListener = function (evt) {
+    var onErrorEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         error.remove();
         error.classList.add('hidden');
         main.removeChild(error);
       }
-      document.removeEventListener('keydown', errorEscListener);
+      document.removeEventListener('keydown', onErrorEscPress);
     };
-    onErrorEscListener();
+    setErrorEscListener();
   };
 
   form.addEventListener('submit', function (evt) {
