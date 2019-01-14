@@ -9,6 +9,14 @@
 
   var NORMAL_STATUS = 200;
 
+  var TIMEOUT = 10000;
+
+  var ErrorText = {
+    responseStatus: 'Cтатус ответа: ',
+    connectionError: 'Произошла ошибка соединения',
+    didNotHaveTime: 'Запрос не успел выполниться за '
+  };
+
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -42,19 +50,19 @@
       if (xhr.status === NORMAL_STATUS) {
         onLoad(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError(ErrorText.responseStatus + xhr.status + ' ' + xhr.statusText);
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError(ErrorText.connectionError);
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError(ErrorText.didNotHaveTime + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT;
 
     xhr.send();
   };

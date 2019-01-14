@@ -39,11 +39,11 @@
   };
 
   var getWhoRadioChecked = function () {
-    for (var i = 0; i < effectsRadio.length; i++) {
-      if (effectsRadio[i].checked) {
+    effectsRadio.forEach(function (item, i) {
+      if (item.checked) {
         radioCheckedIndex = i;
       }
-    }
+    });
     return radioCheckedIndex;
   };
 
@@ -91,56 +91,26 @@
       case 1:
         imgUpload.style.filter = 'grayscale(' + pinSliderResult + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        /*imgUpload.classList.add('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--sepia');
-        imgUpload.classList.remove('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--none');*/
         getWhoAddClasses(PhotoCssClasses.chrome);
         break;
       case 2:
         imgUpload.style.filter = 'sepia(' + pinSliderResult + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        /*imgUpload.classList.add('effects__preview--sepia');
-        imgUpload.classList.remove('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--none');*/
         getWhoAddClasses(PhotoCssClasses.sepia);
         break;
       case 3:
         imgUpload.style.filter = 'invert(' + pinSliderResult * 100 + '%)';
         imgUploadEffectLevel.classList.remove('hidden');
-        /*imgUpload.classList.add('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--sepia');
-        imgUpload.classList.remove('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--none');*/
         getWhoAddClasses(PhotoCssClasses.marvin);
         break;
       case 4:
         imgUpload.style.filter = 'blur(' + pinSliderResult * 3 + 'px)';
         imgUploadEffectLevel.classList.remove('hidden');
-        /*imgUpload.classList.add('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--sepia');
-        imgUpload.classList.remove('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--none');*/
         getWhoAddClasses(PhotoCssClasses.phobos);
         break;
       case 5:
         imgUpload.style.filter = 'brightness(' + ((pinSliderResult * 2) + 1) + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        /*imgUpload.classList.add('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--sepia');
-        imgUpload.classList.remove('effects__preview--none');*/
         getWhoAddClasses(PhotoCssClasses.heat);
         break;
       default:
@@ -151,14 +121,17 @@
         imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
         imgUploadEffectLevel.classList.add('hidden');
         imgUploadEffectLevel.value = '';
-        /*imgUpload.classList.add('effects__preview--none');
-        imgUpload.classList.remove('effects__preview--chrome');
-        imgUpload.classList.remove('effects__preview--marvin');
-        imgUpload.classList.remove('effects__preview--phobos');
-        imgUpload.classList.remove('effects__preview--heat');
-        imgUpload.classList.remove('effects__preview--sepia');*/
         getWhoAddClasses(PhotoCssClasses.none);
     }
+  };
+
+  var getStartImgUploadOverlay = function () {
+    imgUploadOverlay.classList.remove('hidden');
+    var coordEnd = rect.width;
+    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
+    pinSlider.style.left = scaleCoord + '%';
+    effectLevelDepth.style.width = scaleCoord + '%';
+    getPhotoCssEffect(1);
   };
 
   var getImgUploadOverlay = function () {
@@ -177,13 +150,7 @@
         reader.readAsDataURL(file);
       }
 
-
-      imgUploadOverlay.classList.remove('hidden');
-      var coordEnd = rect.width;
-      var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
-      pinSlider.style.left = scaleCoord + '%';
-      effectLevelDepth.style.width = scaleCoord + '%';
-      getPhotoCssEffect(1);
+      getStartImgUploadOverlay();
     });
   };
 
@@ -212,9 +179,9 @@
   };
 
   var setRadioListenerResult = function () {
-    for (var k = 0; k < effectsRadio.length; k++) {
-      setRadioListener(effectsRadio[k]);
-    }
+    effectsRadio.forEach(function (item) {
+      setRadioListener(item);
+    });
   };
 
   getImgUploadOverlay();
@@ -230,7 +197,6 @@
     effectLevelDepth: effectLevelDepth,
     getPhotoCssEffect: getPhotoCssEffect,
     setRadioListenerResult: setRadioListenerResult,
-    imgUploadOverlay: imgUploadOverlay,
-    rect: rect
+    imgUploadOverlay: imgUploadOverlay
   };
 })();

@@ -96,7 +96,7 @@
     var allPhotos = window.data.userPhotoContainer.querySelectorAll('a');
     if (flagNew) {
       allPhotos.forEach(function (item, i) {
-        item.addEventListener('click', getClickMinPictures(response[window.allPictures.randomArrIndex[i]]));
+        item.addEventListener('click', getClickMinPictures(response[window.allPictures.randomArrIndexes[i]]));
       });
     }
     if (!flagNew) {
