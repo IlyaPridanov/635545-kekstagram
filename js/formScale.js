@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var scaleControlValue = document.querySelector('.scale__control--value');
   var scaleControlSmaller = document.querySelector('.scale__control--smaller');
   var scaleControlBigger = document.querySelector('.scale__control--bigger');
 
+  var scaleControlValue = window.formPhotoEditing.scaleControlValue;
   var imgUpload = window.formPhotoEditing.imgUpload;
 
   var setScaleControlListener = function () {

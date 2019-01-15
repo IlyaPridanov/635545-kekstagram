@@ -14,6 +14,7 @@
     none: 'effects__preview--none'
   };
 
+  var scaleControlValue = document.querySelector('.scale__control--value');
   var uploadPhotoCancel = document.querySelector('.img-upload__cancel');
   var uploadFile = document.querySelector('#upload-file');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -29,8 +30,6 @@
   var effectLevelLine = document.querySelector('.effect-level__line');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
-
-  var rect = effectLevelLine.getBoundingClientRect();
 
   inputTextDescription.textContent = '';
 
@@ -127,10 +126,10 @@
 
   var getStartImgUploadOverlay = function () {
     imgUploadOverlay.classList.remove('hidden');
-    var coordEnd = rect.width;
-    var scaleCoord = Math.round((100 / coordEnd) * coordEnd);
-    pinSlider.style.left = scaleCoord + '%';
-    effectLevelDepth.style.width = scaleCoord + '%';
+    pinSlider.style.left = '100%';
+    effectLevelDepth.style.width = '100%';
+    scaleControlValue.value = '100%';
+    imgUpload.style.transform = 'scale(1)';
     getPhotoCssEffect(1);
   };
 
@@ -197,6 +196,7 @@
     effectLevelDepth: effectLevelDepth,
     getPhotoCssEffect: getPhotoCssEffect,
     setRadioListenerResult: setRadioListenerResult,
-    imgUploadOverlay: imgUploadOverlay
+    imgUploadOverlay: imgUploadOverlay,
+    scaleControlValue: scaleControlValue
   };
 })();

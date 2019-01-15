@@ -23,6 +23,7 @@
         'click', function () {
           success.classList.add('hidden');
           main.removeChild(success);
+          form.reset();
         }
     );
 
@@ -33,7 +34,8 @@
     var onSuccessEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         success.classList.add('hidden');
-        main.removeChild(success);
+        main.remove(success);
+        form.reset();
       }
       document.removeEventListener('keydown', onSuccessEscPress);
     };
@@ -47,6 +49,7 @@
       if (event.target === success) {
         success.classList.add('hidden');
         main.removeChild(success);
+        form.reset();
         document.removeEventListener('click', successArbitraryAreaListener);
       }
     };
