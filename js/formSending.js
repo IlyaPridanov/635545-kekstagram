@@ -2,7 +2,7 @@
 
 (function () {
 
-  var ESC_KEYCODE = 27;
+  var ESC_KEYCODE = window.preview.ESC_KEYCODE;
   var form = document.querySelector('.img-upload__form');
   var successTemplate = document.querySelector('#success')
   .content
@@ -19,12 +19,11 @@
     main.appendChild(success);
     var successButton = success.querySelector('.success__button');
 
-    successButton.addEventListener(
-        'click', function () {
-          success.classList.add('hidden');
-          main.removeChild(success);
-          form.reset();
-        }
+    successButton.addEventListener('click', function () {
+      success.classList.add('hidden');
+      main.removeChild(success);
+      form.reset();
+    }
     );
 
     var setSuccessEscListener = function () {
@@ -61,12 +60,11 @@
     main.appendChild(error);
     var errorButton = error.querySelector('.error__button');
 
-    errorButton.addEventListener(
-        'click', function () {
-          error.remove();
-          error.classList.add('hidden');
-          main.removeChild(error);
-        }
+    errorButton.addEventListener('click', function () {
+      error.remove();
+      error.classList.add('hidden');
+      main.removeChild(error);
+    }
     );
 
     var setErrorEscListener = function () {

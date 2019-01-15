@@ -12,9 +12,9 @@
   var TIMEOUT = 10000;
 
   var ErrorText = {
-    responseStatus: 'Cтатус ответа: ',
-    connectionError: 'Произошла ошибка соединения',
-    didNotHaveTime: 'Запрос не успел выполниться за '
+    RESPONSE_STATUS: 'Cтатус ответа: ',
+    CONNECTION_ERROR: 'Произошла ошибка соединения',
+    TIMEOUT_TEXT: 'Запрос не успел выполниться за '
   };
 
   var upload = function (data, onLoad, onError) {
@@ -50,16 +50,16 @@
       if (xhr.status === NORMAL_STATUS) {
         onLoad(xhr.response);
       } else {
-        onError(ErrorText.responseStatus + xhr.status + ' ' + xhr.statusText);
+        onError(ErrorText.RESPONSE_STATUS + xhr.status + ' ' + xhr.statusText);
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError(ErrorText.connectionError);
+      onError(ErrorText.CONNECTION_ERROR);
     });
 
     xhr.addEventListener('timeout', function () {
-      onError(ErrorText.didNotHaveTime + xhr.timeout + 'мс');
+      onError(ErrorText.TIMEOUT_TEXT + xhr.timeout + 'мс');
     });
 
     xhr.timeout = TIMEOUT;

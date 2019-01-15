@@ -7,17 +7,17 @@
   var inputTextHashtags = window.formPhotoEditing.inputTextHashtags;
 
   var HashtagsErrorText = {
-    fiveHashtags: 'Не более пяти хештегов',
-    aloneLattice: 'Хеш-тег не может состоять только из одной решётки',
-    space: 'Хэш-теги разделяются пробелами',
-    newHashtagsLattice: 'Хэш-тег начинается с символа # (решётка)',
-    maxLengthHashtags: 'Максимальная длина одного хэш-тега 20 символов',
-    sameHashtags: 'Один и тот же хэш-тег не может быть использован дважды'
+    FIVE_HASHTAGS: 'Не более пяти хештегов',
+    ALONE_LATTICE: 'Хеш-тег не может состоять только из одной решётки',
+    SPACE: 'Хэш-теги разделяются пробелами',
+    NEW_HASHTAGS_LATTICE: 'Хэш-тег начинается с символа # (решётка)',
+    MAX_LENGTH_HASHTAGS: 'Максимальная длина одного хэш-тега 20 символов',
+    SAME_HASHTAGS: 'Один и тот же хэш-тег не может быть использован дважды'
   };
 
   var checkLengthFiveHashtags = function (arr) {
     if (arr.length > MAX_HASHTAGS) {
-      return HashtagsErrorText.fiveHashtags;
+      return HashtagsErrorText.FIVE_HASHTAGS;
     }
     return '';
   };
@@ -26,7 +26,7 @@
     var checkAloneLatticeResult = '';
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] === '#') {
-        checkAloneLatticeResult = HashtagsErrorText.aloneLattice;
+        checkAloneLatticeResult = HashtagsErrorText.ALONE_LATTICE;
         break;
       }
     }
@@ -38,7 +38,7 @@
     for (var i = 0; i < arr.length; i++) {
       for (var j = 0; j < arr[i].length; j++) {
         if ((arr[i][j] === '#') && (!(j === 0))) {
-          checkSpaceHashtagsResult = HashtagsErrorText.space;
+          checkSpaceHashtagsResult = HashtagsErrorText.SPACE;
           break;
         }
       }
@@ -50,7 +50,7 @@
     var checkNewHashtagsLatticeResult = '';
     for (var i = 0; i < arr.length; i++) {
       if (arr[i][0] !== '#') {
-        checkNewHashtagsLatticeResult = HashtagsErrorText.newHashtagsLattice;
+        checkNewHashtagsLatticeResult = HashtagsErrorText.NEW_HASHTAGS_LATTICE;
         break;
       }
     }
@@ -61,7 +61,7 @@
     var checkMaxLengthHashtagsResult = '';
     for (var i = 0; i < arr.length; i++) {
       if (arr[i].length > MAX_LENGTH_HASHTAGS) {
-        checkMaxLengthHashtagsResult = HashtagsErrorText.maxLengthHashtags;
+        checkMaxLengthHashtagsResult = HashtagsErrorText.MAX_LENGTH_HASHTAGS;
         break;
       }
     }
@@ -77,7 +77,7 @@
       }
       for (var j = 0; j < arr.length; j++) {
         if ((arr[i].toUpperCase() === arr[j].toUpperCase()) && (i !== j)) {
-          checkSameHashtagsResult = HashtagsErrorText.sameHashtags;
+          checkSameHashtagsResult = HashtagsErrorText.SAME_HASHTAGS;
           flag = true;
           break;
         }

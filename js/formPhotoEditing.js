@@ -1,17 +1,17 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = 27;
+  var ESC_KEYCODE = window.preview.ESC_KEYCODE;
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var PERCENT_GET_CSS_PROPERTY = 100;
 
   var PhotoCssClasses = {
-    chrome: 'effects__preview--chrome',
-    sepia: 'effects__preview--sepia',
-    marvin: 'effects__preview--marvin',
-    phobos: 'effects__preview--phobos',
-    heat: 'effects__preview--heat',
-    none: 'effects__preview--none'
+    CHROME: 'effects__preview--chrome',
+    SEPIA: 'effects__preview--sepia',
+    MARVIN: 'effects__preview--marvin',
+    PHOBOS: 'effects__preview--phobos',
+    HEAT: 'effects__preview--heat',
+    NONE: 'effects__preview--none'
   };
 
   var scaleControlValue = document.querySelector('.scale__control--value');
@@ -57,30 +57,30 @@
   };
 
   var getWhoAddClasses = function (addClass) {
-    imgUpload.classList.remove(PhotoCssClasses.chrome);
-    imgUpload.classList.remove(PhotoCssClasses.sepia);
-    imgUpload.classList.remove(PhotoCssClasses.marvin);
-    imgUpload.classList.remove(PhotoCssClasses.phobos);
-    imgUpload.classList.remove(PhotoCssClasses.heat);
-    imgUpload.classList.remove(PhotoCssClasses.none);
+    imgUpload.classList.remove(PhotoCssClasses.CHROME);
+    imgUpload.classList.remove(PhotoCssClasses.SEPIA);
+    imgUpload.classList.remove(PhotoCssClasses.MARVIN);
+    imgUpload.classList.remove(PhotoCssClasses.PHOBOS);
+    imgUpload.classList.remove(PhotoCssClasses.HEAT);
+    imgUpload.classList.remove(PhotoCssClasses.NONE);
     switch (addClass) {
-      case PhotoCssClasses.chrome:
-        imgUpload.classList.add(PhotoCssClasses.chrome);
+      case PhotoCssClasses.CHROME:
+        imgUpload.classList.add(PhotoCssClasses.CHROME);
         break;
-      case PhotoCssClasses.sepia:
-        imgUpload.classList.add(PhotoCssClasses.sepia);
+      case PhotoCssClasses.SEPIA:
+        imgUpload.classList.add(PhotoCssClasses.SEPIA);
         break;
-      case PhotoCssClasses.marvin:
-        imgUpload.classList.add(PhotoCssClasses.marvin);
+      case PhotoCssClasses.MARVIN:
+        imgUpload.classList.add(PhotoCssClasses.MARVIN);
         break;
-      case PhotoCssClasses.phobos:
-        imgUpload.classList.add(PhotoCssClasses.phobos);
+      case PhotoCssClasses.PHOBOS:
+        imgUpload.classList.add(PhotoCssClasses.PHOBOS);
         break;
-      case PhotoCssClasses.heat:
-        imgUpload.classList.add(PhotoCssClasses.heat);
+      case PhotoCssClasses.HEAT:
+        imgUpload.classList.add(PhotoCssClasses.HEAT);
         break;
       default:
-        imgUpload.classList.add(PhotoCssClasses.none);
+        imgUpload.classList.add(PhotoCssClasses.NONE);
     }
   };
 
@@ -90,27 +90,27 @@
       case 1:
         imgUpload.style.filter = 'grayscale(' + pinSliderResult + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        getWhoAddClasses(PhotoCssClasses.chrome);
+        getWhoAddClasses(PhotoCssClasses.CHROME);
         break;
       case 2:
         imgUpload.style.filter = 'sepia(' + pinSliderResult + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        getWhoAddClasses(PhotoCssClasses.sepia);
+        getWhoAddClasses(PhotoCssClasses.SEPIA);
         break;
       case 3:
         imgUpload.style.filter = 'invert(' + pinSliderResult * 100 + '%)';
         imgUploadEffectLevel.classList.remove('hidden');
-        getWhoAddClasses(PhotoCssClasses.marvin);
+        getWhoAddClasses(PhotoCssClasses.MARVIN);
         break;
       case 4:
         imgUpload.style.filter = 'blur(' + pinSliderResult * 3 + 'px)';
         imgUploadEffectLevel.classList.remove('hidden');
-        getWhoAddClasses(PhotoCssClasses.phobos);
+        getWhoAddClasses(PhotoCssClasses.PHOBOS);
         break;
       case 5:
         imgUpload.style.filter = 'brightness(' + ((pinSliderResult * 2) + 1) + ')';
         imgUploadEffectLevel.classList.remove('hidden');
-        getWhoAddClasses(PhotoCssClasses.heat);
+        getWhoAddClasses(PhotoCssClasses.HEAT);
         break;
       default:
         imgUpload.style.filter = 'grayscale(' + 0 + ')';
@@ -120,7 +120,7 @@
         imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
         imgUploadEffectLevel.classList.add('hidden');
         imgUploadEffectLevel.value = '';
-        getWhoAddClasses(PhotoCssClasses.none);
+        getWhoAddClasses(PhotoCssClasses.NONE);
     }
   };
 
@@ -155,11 +155,10 @@
 
 
   var getCloseUploadPhoto = function () {
-    uploadPhotoCancel.addEventListener(
-        'click', function () {
-          imgUploadOverlay.classList.add('hidden');
-          imgUploadOverlay.value = '';
-        }
+    uploadPhotoCancel.addEventListener('click', function () {
+      imgUploadOverlay.classList.add('hidden');
+      imgUploadOverlay.value = '';
+    }
     );
     document.addEventListener('keydown', function (evt) {
       if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
