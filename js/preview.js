@@ -8,13 +8,13 @@
 
   var bigPicture = document.querySelector('.big-picture');
 
-  var bigPictureBlock = document.querySelector('.big-picture__img');
+  var bigPictureBlock = bigPicture.querySelector('.big-picture__img');
   var bigPictureImg = bigPictureBlock.querySelector('img');
-  var bigPictureCancel = document.querySelector('.big-picture__cancel');
+  var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
-  var commentsLoader = document.querySelector('.comments-loader');
-  var socialCommentCount = document.querySelector('.social__comment-count');
-  var quantityСommentsNow = document.querySelector('.comments-now');
+  var commentsLoader = window.allPictures.commentsLoader;
+  var socialCommentCount = window.allPictures.socialCommentCount;
+  var quantityСommentsNow = bigPicture.querySelector('.comments-now');
 
   commentsLoader.classList.remove('visually-hidden');
   socialCommentCount.classList.remove('visually-hidden');
@@ -37,25 +37,24 @@
     return socialCommentsAll;
   };
 
-  var getBigPicture = function (response) {
-    bigPicture.querySelector('.big-picture__img').setAttribute('src', response.url);
-    bigPicture.querySelector('.likes-count').textContent = response.likes;
-    bigPicture.querySelector('.comments-count').textContent = response.comments.length;
-
+  var commentCondition = function (response) {
     bigPicture.querySelector('.social__comments').innerHTML = getSocialComments(response);
     if (socialCommentsVisual < response.comments.length) {
       quantityСommentsNow.textContent = socialCommentsVisual;
     } else {
       quantityСommentsNow.textContent = response.comments.length;
     }
+  };
+
+  var getBigPicture = function (response) {
+    bigPicture.querySelector('.big-picture__img').setAttribute('src', response.url);
+    bigPicture.querySelector('.likes-count').textContent = response.likes;
+    bigPicture.querySelector('.comments-count').textContent = response.comments.length;
+
+    commentCondition(response);
     commentsLoader.addEventListener('click', function () {
       socialCommentsVisual += 5;
-      bigPicture.querySelector('.social__comments').innerHTML = getSocialComments(response);
-      if (socialCommentsVisual < response.comments.length) {
-        quantityСommentsNow.textContent = socialCommentsVisual;
-      } else {
-        quantityСommentsNow.textContent = response.comments.length;
-      }
+      commentCondition(response);
     });
     bigPicture.querySelector('.social__caption').textContent = response.description;
     window.preview.closeBigPictures();
@@ -94,33 +93,24 @@
 
   var openBigPictures = function (response) {
     window.allPictures.getAllPhotoBuild(response);
-    var allPhotos = window.data.userPhotoContainer.querySelectorAll('a');
-    if (flagNew) {
-      allPhotos.forEach(function (item, i) {
-        item.addEventListener('click', getClickMinPictures(response[window.allPictures.randomArrIndexes[i]]));
-      });
-    }
-    if (!flagNew) {
-      allPhotos.forEach(function (item, i) {
-        item.addEventListener('click', getClickMinPictures(response[i]));
-      });
-    }
+    var allPhotos = window.allPictures.userPhotoContainer.querySelectorAll('a');
+    allPhotos.forEach(function (item, i) {
+      item.addEventListener('click', getClickMinPictures(flagNew ? response[window.allPictures.randomArrIndexes[i]] : response[i]));
+    });
   };
 
   window.backend.send(openBigPictures);
 
-  window.allPictures.filterPopular.addEventListener('click', function () {
-    flagNew = false;
-    window.backend.send(openBigPictures);
-  });
-  window.allPictures.filterNew.addEventListener('click', function () {
-    flagNew = true;
-    window.backend.send(openBigPictures);
-  });
-  window.allPictures.filterDiscussed.addEventListener('click', function () {
-    flagNew = false;
-    window.backend.send(openBigPictures);
-  });
+  var getAllPicturesNewFlag = function (flag) {
+    return function () {
+      flagNew = flag;
+      window.backend.send(openBigPictures);
+    };
+  };
+
+  window.allPictures.filterPopular.addEventListener('click', getAllPicturesNewFlag(false));
+  window.allPictures.filterNew.addEventListener('click', getAllPicturesNewFlag(true));
+  window.allPictures.filterDiscussed.addEventListener('click', getAllPicturesNewFlag(false));
 
   closeBigPictures();
 

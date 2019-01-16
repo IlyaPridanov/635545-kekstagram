@@ -6,13 +6,20 @@
 
   var flagNew = false;
   var allPhotos = [];
+  var userPhotoContainer = document.querySelector('.pictures');
   var imgFilters = document.querySelector('.img-filters');
-  var filterPopular = document.querySelector('#filter-popular');
-  var filterNew = document.querySelector('#filter-new');
-  var filterDiscussed = document.querySelector('#filter-discussed');
+  var filterPopular = imgFilters.querySelector('#filter-popular');
+  var filterNew = imgFilters.querySelector('#filter-new');
+  var filterDiscussed = imgFilters.querySelector('#filter-discussed');
   var userPhotoTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture');
+
+  var socialCommentCount = document.querySelector('.social__comment-count');
+  var commentsLoader = document.querySelector('.comments-loader');
+
+  socialCommentCount.classList.add('visually-hidden');
+  commentsLoader.classList.add('visually-hidden');
 
   var getRandomInt = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -101,11 +108,11 @@
 
 
   var getAllPhotoBuild = function (response) {
-    var removeTegArrs = window.data.userPhotoContainer.querySelectorAll('a');
+    var removeTegArrs = userPhotoContainer.querySelectorAll('a');
     removeTegArrs.forEach(function (item) {
-      window.data.userPhotoContainer.removeChild(item);
+      userPhotoContainer.removeChild(item);
     });
-    window.data.userPhotoContainer.appendChild(getFragment(response));
+    userPhotoContainer.appendChild(getFragment(response));
     imgFilters.classList.remove('img-filters--inactive');
   };
 
@@ -155,6 +162,9 @@
     filterNew: filterNew,
     filterDiscussed: filterDiscussed,
     flagNew: flagNew,
-    randomArrIndexes: randomArrIndexes
+    randomArrIndexes: randomArrIndexes,
+    userPhotoContainer: userPhotoContainer,
+    socialCommentCount: socialCommentCount,
+    commentsLoader: commentsLoader
   };
 })();

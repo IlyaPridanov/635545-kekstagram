@@ -14,22 +14,25 @@
     NONE: 'effects__preview--none'
   };
 
-  var scaleControlValue = document.querySelector('.scale__control--value');
-  var uploadPhotoCancel = document.querySelector('.img-upload__cancel');
-  var uploadFile = document.querySelector('#upload-file');
   var imgUploadOverlay = document.querySelector('.img-upload__overlay');
-  var pinSlider = document.querySelector('.effect-level__pin');
-  var effectsRadio = document.querySelectorAll('.effects__radio');
+  var imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview');
+  var uploadPhotoCancel = imgUploadOverlay.querySelector('.img-upload__cancel');
+
+  var scaleControlValue = imgUploadOverlay.querySelector('.scale__control--value');
+  var uploadFile = document.querySelector('#upload-file');
+
+  var pinSlider = imgUploadOverlay.querySelector('.effect-level__pin');
+  var effectsRadio = imgUploadOverlay.querySelectorAll('.effects__radio');
   var radioCheckedIndex;
-  var imgUploadPreview = document.querySelector('.img-upload__preview');
+
   var imgUpload = imgUploadPreview.querySelector('img');
 
-  var inputTextHashtags = document.querySelector('.text__hashtags');
-  var inputTextDescription = document.querySelector('.text__description');
+  var inputTextHashtags = imgUploadOverlay.querySelector('.text__hashtags');
+  var inputTextDescription = imgUploadOverlay.querySelector('.text__description');
 
-  var effectLevelLine = document.querySelector('.effect-level__line');
-  var effectLevelDepth = document.querySelector('.effect-level__depth');
-  var imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
+  var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
+  var effectLevelDepth = imgUploadOverlay.querySelector('.effect-level__depth');
+  var imgUploadEffectLevel = imgUploadOverlay.querySelector('.img-upload__effect-level');
 
   inputTextDescription.textContent = '';
 
@@ -57,31 +60,16 @@
   };
 
   var getWhoAddClasses = function (addClass) {
-    imgUpload.classList.remove(PhotoCssClasses.CHROME);
-    imgUpload.classList.remove(PhotoCssClasses.SEPIA);
-    imgUpload.classList.remove(PhotoCssClasses.MARVIN);
-    imgUpload.classList.remove(PhotoCssClasses.PHOBOS);
-    imgUpload.classList.remove(PhotoCssClasses.HEAT);
-    imgUpload.classList.remove(PhotoCssClasses.NONE);
-    switch (addClass) {
-      case PhotoCssClasses.CHROME:
-        imgUpload.classList.add(PhotoCssClasses.CHROME);
-        break;
-      case PhotoCssClasses.SEPIA:
-        imgUpload.classList.add(PhotoCssClasses.SEPIA);
-        break;
-      case PhotoCssClasses.MARVIN:
-        imgUpload.classList.add(PhotoCssClasses.MARVIN);
-        break;
-      case PhotoCssClasses.PHOBOS:
-        imgUpload.classList.add(PhotoCssClasses.PHOBOS);
-        break;
-      case PhotoCssClasses.HEAT:
-        imgUpload.classList.add(PhotoCssClasses.HEAT);
-        break;
-      default:
-        imgUpload.classList.add(PhotoCssClasses.NONE);
+    imgUploadEffectLevel.classList.remove('hidden');
+    if (addClass === PhotoCssClasses.NONE) {
+      imgUploadEffectLevel.classList.add('hidden');
     }
+    imgUpload.classList.add(addClass);
+    imgUpload.classList.forEach(function (item) {
+      if (!(item === addClass)) {
+        imgUpload.classList.remove(item);
+      }
+    });
   };
 
   var getPhotoCssEffect = function (pinSliderResult) {
@@ -89,36 +77,26 @@
     switch (whoRadioChecked) {
       case 1:
         imgUpload.style.filter = 'grayscale(' + pinSliderResult + ')';
-        imgUploadEffectLevel.classList.remove('hidden');
         getWhoAddClasses(PhotoCssClasses.CHROME);
         break;
       case 2:
         imgUpload.style.filter = 'sepia(' + pinSliderResult + ')';
-        imgUploadEffectLevel.classList.remove('hidden');
         getWhoAddClasses(PhotoCssClasses.SEPIA);
         break;
       case 3:
         imgUpload.style.filter = 'invert(' + pinSliderResult * 100 + '%)';
-        imgUploadEffectLevel.classList.remove('hidden');
         getWhoAddClasses(PhotoCssClasses.MARVIN);
         break;
       case 4:
         imgUpload.style.filter = 'blur(' + pinSliderResult * 3 + 'px)';
-        imgUploadEffectLevel.classList.remove('hidden');
         getWhoAddClasses(PhotoCssClasses.PHOBOS);
         break;
       case 5:
         imgUpload.style.filter = 'brightness(' + ((pinSliderResult * 2) + 1) + ')';
-        imgUploadEffectLevel.classList.remove('hidden');
         getWhoAddClasses(PhotoCssClasses.HEAT);
         break;
       default:
-        imgUpload.style.filter = 'grayscale(' + 0 + ')';
-        imgUpload.style.filter = 'sepia(' + 0 + ')';
-        imgUpload.style.filter = 'invert(' + 0 * 100 + '%)';
-        imgUpload.style.filter = 'blur(' + 0 * 3 + 'px)';
-        imgUpload.style.filter = 'brightness(' + ((0 * 2) + 1) + ')';
-        imgUploadEffectLevel.classList.add('hidden');
+        imgUpload.style.filter = 'none';
         imgUploadEffectLevel.value = '';
         getWhoAddClasses(PhotoCssClasses.NONE);
     }

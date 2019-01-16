@@ -33,7 +33,7 @@
     var onSuccessEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         success.classList.add('hidden');
-        main.remove(success);
+        main.removeChild(success);
         form.reset();
       }
       document.removeEventListener('keydown', onSuccessEscPress);
