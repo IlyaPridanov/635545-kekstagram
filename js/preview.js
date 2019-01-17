@@ -62,7 +62,7 @@
 
   var closeBigPictures = function () {
     bigPictureCancel.addEventListener('click', function () {
-      socialCommentsVisual = 5;
+      socialCommentsVisual = MAX_COMMENTS;
       bigPicture.classList.add('hidden');
     }
     );
@@ -71,7 +71,7 @@
     };
     var onBigPictureEscListener = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
-        socialCommentsVisual = 5;
+        socialCommentsVisual = MAX_COMMENTS;
         bigPicture.classList.add('hidden');
       }
       document.removeEventListener('keydown', onBigPictureEscListener);
@@ -81,7 +81,7 @@
 
   var getClickMinPictures = function (responseIndex) {
     return function () {
-      socialCommentsVisual = 5;
+      socialCommentsVisual = MAX_COMMENTS;
       commentsLoader.classList.remove('hidden');
       getBigPicture(responseIndex);
       bigPicture.classList.remove('hidden');

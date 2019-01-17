@@ -2,7 +2,7 @@
 
 (function () {
   var NUMBER_OF_RANDOM_PHOTOS = 10;
-  var REBOOT_TIMEOT = 300;
+  var REBOOT_TIMEOUT = 300;
 
   var flagNew = false;
   var allPhotos = [];
@@ -122,7 +122,7 @@
     var lastTimeout;
     lastTimeout = window.setTimeout(function () {
       functionTimeout();
-    }, REBOOT_TIMEOT);
+    }, REBOOT_TIMEOUT);
     if (lastTimeout) {
       window.clearTimeout(lastTimeout);
     }
