@@ -2,7 +2,6 @@
 
 (function () {
 
-  var ESC_KEYCODE = window.preview.ESC_KEYCODE;
   var form = document.querySelector('.img-upload__form');
   var successTemplate = document.querySelector('#success')
   .content
@@ -31,7 +30,7 @@
     };
 
     var onSuccessEscPress = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
+      if (evt.keyCode === window.preview.ESC_KEYCODE) {
         success.classList.add('hidden');
         main.removeChild(success);
         form.reset();
@@ -72,7 +71,7 @@
     };
 
     var onErrorEscPress = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
+      if (evt.keyCode === window.preview.ESC_KEYCODE) {
         error.remove();
         error.classList.add('hidden');
         main.removeChild(error);

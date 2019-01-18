@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var ESC_KEYCODE = window.preview.ESC_KEYCODE;
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var PERCENT_GET_CSS_PROPERTY = 100;
 
@@ -64,12 +63,21 @@
     if (addClass === PhotoCssClasses.NONE) {
       imgUploadEffectLevel.classList.add('hidden');
     }
-    imgUpload.classList.add(addClass);
+    /*imgUpload.classList.forEach(function (item) {
+      if (item === addClass) {
+        imgUpload.classList.remove(item);
+      }
+    });
+    if (imgUpload.classList.contains(addClass)) {
+      imgUpload.classList.remove(addClass);
+    }*/
+
     imgUpload.classList.forEach(function (item) {
       if (!(item === addClass)) {
         imgUpload.classList.remove(item);
       }
     });
+    imgUpload.classList.add(addClass);
   };
 
   var getPhotoCssEffect = function (pinSliderResult) {
@@ -139,7 +147,7 @@
     }
     );
     document.addEventListener('keydown', function (evt) {
-      if ((evt.keyCode === ESC_KEYCODE) && (!isInputNameInFocus())) {
+      if ((evt.keyCode === window.preview.ESC_KEYCODE) && (!isInputNameInFocus())) {
         imgUploadOverlay.classList.add('hidden');
         imgUploadOverlay.value = '';
       }
@@ -159,6 +167,27 @@
       setRadioListener(item);
     });
   };
+
+  var effectsPreview = imgUploadOverlay.querySelectorAll('.effects__radio');
+
+  var setEffectsPreviewListenerResult = function () {
+    effectsPreview.forEach(function (item) {
+      setEffectsPreviewListener(item);
+    });
+  };
+
+  var setEffectsPreviewListener = function (radioArr) {
+    radioArr.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 13) {
+        pinSlider.style.left = '100%';
+        effectLevelDepth.style.width = '100%';
+        getPhotoCssEffect(1);
+        console.log('лол');
+      }
+    });
+  };
+
+  setEffectsPreviewListenerResult();
 
   getImgUploadOverlay();
   getCloseUploadPhoto();

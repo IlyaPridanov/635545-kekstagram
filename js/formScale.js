@@ -10,7 +10,7 @@
   var setScaleControlListener = function () {
     scaleControlValue.value = '100%';
     scaleControlSmaller.addEventListener('click', function () {
-      if (parseFloat(scaleControlValue.value) > 0) {
+      if (parseFloat(scaleControlValue.value) > 25) {
         scaleControlValue.value = String(parseFloat(scaleControlValue.value) - 25) + '%';
         imgUpload.style.transform = 'scale(' + (parseFloat(scaleControlValue.value) / 100) + ')';
       }
