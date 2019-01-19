@@ -38,16 +38,16 @@
     xhr.timeout = TIMEOUT;
   };
 
-  /*var upload = function (data, onLoad, onError) {
+  var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
     createRequest(xhr, onLoad, onError);
 
     xhr.open('POST', URL_UPLOAD);
     xhr.send(data);
-  };*/
+  };
 
-  var upload = function (data, onLoad, onError) {
+  /*var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
     createRequest(xhr, onLoad, onError);
@@ -66,7 +66,7 @@
     xhr.open('POST', URL_UPLOAD);
 
     xhr.send(data);
-  };
+  };*/
 
   var send = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
