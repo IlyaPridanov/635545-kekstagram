@@ -141,6 +141,12 @@
       if ((evt.keyCode === window.preview.ESC_KEYCODE) && (!isInputNameInFocus())) {
         imgUploadOverlay.classList.add('hidden');
         imgUploadOverlay.value = '';
+        pinSlider.style.left = '100%';
+        effectLevelDepth.style.width = '100%';
+        scaleControlValue.value = '100%';
+        imgUpload.style.transform = 'scale(1)';
+        effectsRadio[5].checked = true;
+        getPhotoCssEffect(1);
       }
     });
 

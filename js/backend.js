@@ -2,6 +2,7 @@
 
 (function () {
   var URL_UPLOAD = 'https://js.dump.academy/kekstagram';
+  /*var URL_UPLOAD = 'https://js.dump.academy/234567543';*/
 
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
 
@@ -37,12 +38,33 @@
     xhr.timeout = TIMEOUT;
   };
 
-  var upload = function (data, onLoad, onError) {
+  /*var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
 
     createRequest(xhr, onLoad, onError);
 
     xhr.open('POST', URL_UPLOAD);
+    xhr.send(data);
+  };*/
+
+  var upload = function (data, onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+
+    createRequest(xhr, onLoad, onError);
+    xhr.addEventListener('load', function () {
+
+      onLoad(xhr.response);
+
+    });
+
+    xhr.addEventListener('error', function () {
+
+      onError(xhr.status + ' ' + xhr.statusText);
+
+    });
+
+    xhr.open('POST', URL_UPLOAD);
+
     xhr.send(data);
   };
 
