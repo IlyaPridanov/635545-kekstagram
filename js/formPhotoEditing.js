@@ -63,15 +63,6 @@
     if (addClass === PhotoCssClasses.NONE) {
       imgUploadEffectLevel.classList.add('hidden');
     }
-    /*imgUpload.classList.forEach(function (item) {
-      if (item === addClass) {
-        imgUpload.classList.remove(item);
-      }
-    });
-    if (imgUpload.classList.contains(addClass)) {
-      imgUpload.classList.remove(addClass);
-    }*/
-
     imgUpload.classList.forEach(function (item) {
       if (!(item === addClass)) {
         imgUpload.classList.remove(item);
@@ -182,7 +173,6 @@
         pinSlider.style.left = '100%';
         effectLevelDepth.style.width = '100%';
         getPhotoCssEffect(1);
-        console.log('лол');
       }
     });
   };

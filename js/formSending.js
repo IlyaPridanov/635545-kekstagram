@@ -20,7 +20,9 @@
 
     successButton.addEventListener('click', function () {
       success.classList.add('hidden');
-      main.removeChild(success);
+      if (main === success.parentNode) {
+        main.removeChild(success);
+      }
       form.reset();
     }
     );
@@ -32,7 +34,9 @@
     var onSuccessEscPress = function (evt) {
       if (evt.keyCode === window.preview.ESC_KEYCODE) {
         success.classList.add('hidden');
-        main.removeChild(success);
+        if (main === success.parentNode) {
+          main.removeChild(success);
+        }
         form.reset();
       }
       document.removeEventListener('keydown', onSuccessEscPress);
@@ -46,7 +50,9 @@
     var successArbitraryAreaListener = function (event) {
       if (event.target === success) {
         success.classList.add('hidden');
-        main.removeChild(success);
+        if (main === success.parentNode) {
+          main.removeChild(success);
+        }
         form.reset();
         document.removeEventListener('click', successArbitraryAreaListener);
       }
@@ -62,7 +68,9 @@
     errorButton.addEventListener('click', function () {
       error.remove();
       error.classList.add('hidden');
-      main.removeChild(error);
+      if (main === error.parentNode) {
+        main.removeChild(error);
+      }
     }
     );
 
@@ -74,7 +82,9 @@
       if (evt.keyCode === window.preview.ESC_KEYCODE) {
         error.remove();
         error.classList.add('hidden');
-        main.removeChild(error);
+        if (main === error.parentNode) {
+          main.removeChild(error);
+        }
       }
       document.removeEventListener('keydown', onErrorEscPress);
     };
