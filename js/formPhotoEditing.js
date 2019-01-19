@@ -149,20 +149,6 @@
         getPhotoCssEffect(1);
       }
     });
-
-    /*var setUploadPhotoEscPress = function () {
-      document.addEventListener('keydown', onUploadPhotoEscPress);
-    };
-
-    var onUploadPhotoEscPress = function (evt) {
-      if ((evt.keyCode === window.preview.ESC_KEYCODE) && (!isInputNameInFocus())) {
-        imgUploadOverlay.classList.add('hidden');
-        imgUploadOverlay.value = '';
-      }
-      document.removeEventListener('keydown', onUploadPhotoEscPress);
-    };
-
-    setUploadPhotoEscPress();*/
   };
 
   var setUploadPhotoEscPress = function () {

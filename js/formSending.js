@@ -60,12 +60,11 @@
     onSuccessArbitraryAreaListener();
   };
 
-  var errorForm = function (ddd) {
+  var errorForm = function () {
     window.formPhotoEditing.imgUploadOverlay.classList.add('hidden');
     var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
     var errorButton = error.querySelectorAll('.error__button');
-    console.log(ddd);
 
     var setErrorButtonListenerResult = function () {
       errorButton.forEach(function (item) {
