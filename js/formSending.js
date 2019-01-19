@@ -63,16 +63,33 @@
   var errorForm = function () {
     var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
-    var errorButton = error.querySelector('.error__button');
+    var errorButton = error.querySelectorAll('.error__button');
 
-    errorButton.addEventListener('click', function () {
+    /*errorButton.addEventListener('click', function () {
       error.remove();
       error.classList.add('hidden');
       if (main === error.parentNode) {
         main.removeChild(error);
       }
     }
-    );
+    );*/
+
+    var setErrorButtonListenerResult = function () {
+      errorButton.forEach(function (item) {
+        setErrorButtonListener(item);
+      });
+    };
+
+    var setErrorButtonListener = function (radioArr) {
+      radioArr.addEventListener('click', function () {
+        error.classList.add('hidden');
+        if (main === error.parentNode) {
+          main.removeChild(error);
+        }
+      });
+    };
+
+    setErrorButtonListenerResult();
 
     var setErrorEscListener = function () {
       document.addEventListener('keydown', onErrorEscPress);

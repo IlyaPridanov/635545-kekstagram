@@ -159,26 +159,6 @@
     });
   };
 
-  var effectsPreview = imgUploadOverlay.querySelectorAll('.effects__radio');
-
-  var setEffectsPreviewListenerResult = function () {
-    effectsPreview.forEach(function (item) {
-      setEffectsPreviewListener(item);
-    });
-  };
-
-  var setEffectsPreviewListener = function (radioArr) {
-    radioArr.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 13) {
-        pinSlider.style.left = '100%';
-        effectLevelDepth.style.width = '100%';
-        getPhotoCssEffect(1);
-      }
-    });
-  };
-
-  setEffectsPreviewListenerResult();
-
   getImgUploadOverlay();
   getCloseUploadPhoto();
   getPinSliderResultIntro();
