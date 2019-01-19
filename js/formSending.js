@@ -61,18 +61,10 @@
   };
 
   var errorForm = function () {
+    window.formPhotoEditing.imgUploadOverlay.classList.add('hidden');
     var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
     var errorButton = error.querySelectorAll('.error__button');
-
-    /*errorButton.addEventListener('click', function () {
-      error.remove();
-      error.classList.add('hidden');
-      if (main === error.parentNode) {
-        main.removeChild(error);
-      }
-    }
-    );*/
 
     var setErrorButtonListenerResult = function () {
       errorButton.forEach(function (item) {
