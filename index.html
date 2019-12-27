@@ -30,11 +30,16 @@
       <section class="img-upload">
         <div class="img-upload__wrapper">
           <h2 class="img-upload__title  visually-hidden">Загрузка фотографии</h2>
-          <form class="img-upload__form" id="upload-select-image" method="post" enctype="multipart/form-data" autocomplete="off">
+          <form class="img-upload__form"
+            id="upload-select-image"
+            method="post"
+            enctype="multipart/form-data"
+            action=" https://js.dump.academy/kekstagram"
+            autocomplete="off">
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
-              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" accept="image/jpeg, image/png, image/gif" name="filename" required>
+              <input type="file" id="upload-file" class="img-upload__input  visually-hidden" name="filename" required>
               <label for="upload-file" class="img-upload__label  img-upload__control">Загрузить</label>
             </fieldset>
 
@@ -57,7 +62,7 @@
 
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
                   <fieldset class="img-upload__effect-level  effect-level">
-                    <input class="effect-level__value" type="number" name="effect-level" value="100">
+                    <input class="effect-level__value" type="number" name="effect-level" value="20">
                     <div class="effect-level__line">
                       <div class="effect-level__pin" tabindex="0">Кнопка изменения глубины эффекта фотографии</div>
                       <div class="effect-level__depth">Глубина эффекта фотографии</div>
@@ -72,7 +77,7 @@
                 <fieldset class="img-upload__effects  effects">
                   <ul class="effects__list">
                     <li class="effects__item">
-                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-none" value="none" checked>
+                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-none" value="none">
                       <label for="effect-none" class="effects__label">
                         <span class="effects__preview  effects__preview--none">Превью фото без эффекта</span>
                         Оригинал
@@ -107,7 +112,7 @@
                       </label>
                     </li>
                     <li class="effects__item">
-                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-heat" value="heat">
+                      <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-heat" value="heat" checked>
                       <label for="effect-heat" class="effects__label">
                         <span class="effects__preview  effects__preview--heat">Превью эффекта Зной</span>
                         Зной
@@ -118,8 +123,18 @@
 
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
-                  <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег">
-                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140"></textarea>
+                  <input class="text__hashtags"
+                    name="hashtags"
+                    placeholder="#хэш-тег"
+                    minlength="2"
+                    maxlength="104"
+                    tabindex="0">
+                  <textarea class="text__description"
+                    name="description"
+                    placeholder="Ваш комментарий..."
+                    maxlength="140"
+                    tabindex="0">
+                  </textarea>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -153,7 +168,7 @@
           </div>
 
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="comments-now">5</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -235,15 +250,17 @@
   <template id="messages">
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
-<script src="js/utility.js"></script>
-<script src="js/connection.js"></script>
-<script src="js/picture.js"></script>
-<script src="js/sort.js"></script>
-<script src="js/gallery.js"></script>
-<script src="js/data.js"></script>
-<script src="js/saturation.js"></script>
-<script src="js/scale.js"></script>
-<script src="js/popup.js"></script>
-<script src="js/effects.js"></script>
+
+  <!--<script src="js/pictures.js"></script> -->
+  <script src="js/backend.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/allPictures.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/formPhotoEditing.js"></script>
+  <script src="js/formPinRun.js"></script>
+  <script src="js/formScale.js"></script>
+  <script src="js/formValidation.js"></script>
+  <script src="js/formSending.js"></script>
+
 </body>
 </html>
